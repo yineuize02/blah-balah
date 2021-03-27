@@ -1,0 +1,19 @@
+server:
+  port: 8801
+spring:
+  application:
+    name: blah-gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true #使用小写service-id
+      routes: #配置路由路径
+        - id: blah-api
+          uri: lb://blah-api
+          predicates:
+            - Path=/blah-api/**
+          filters:
+            - StripPrefix=1

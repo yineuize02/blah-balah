@@ -1,0 +1,11 @@
+server:
+  port: 8882
+spring:
+  application:
+    name: blah-oauth
+
+  datasource:
+    url: jdbc:mysql://localhost/test
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver

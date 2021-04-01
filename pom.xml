@@ -19,6 +19,7 @@
   <modules>
     <module>blah-gateway</module>
     <module>blah-api</module>
+    <module>blah-oauth-server</module>
   </modules>
 
 
@@ -39,7 +40,7 @@
     <admin-starter-server.version>2.2.3</admin-starter-server.version>
     <minio.version>7.1.0</minio.version>
     <nimbus-jose-jwt.version>8.16</nimbus-jose-jwt.version>
-
+    <spring-boot-starter-jdbc.version>2.3.0.RELEASE</spring-boot-starter-jdbc.version>
   </properties>
 
   <dependencies>
@@ -125,6 +126,13 @@
         <groupId>org.mybatis</groupId>
         <artifactId>mybatis</artifactId>
         <version>${mybatis.version}</version>
+      </dependency>
+      <!-- jdbc -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-jdbc</artifactId>
+        <version>${spring-boot-starter-jdbc.version}</version>
+
       </dependency>
       <!--Mysql数据库驱动-->
       <dependency>

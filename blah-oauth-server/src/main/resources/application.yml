@@ -5,7 +5,7 @@ spring:
     name: blah-oauth
 
   datasource:
-    url: jdbc:mysql://localhost/test
-    username: root
-    password: 123456
+    url: jdbc:mysql://${MYSQL_ADDR}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.jdbc.Driver

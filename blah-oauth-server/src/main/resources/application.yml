@@ -8,4 +8,4 @@ spring:
     url: jdbc:mysql://${MYSQL_ADDR}
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver

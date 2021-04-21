@@ -41,6 +41,8 @@
     <minio.version>7.1.0</minio.version>
     <nimbus-jose-jwt.version>8.16</nimbus-jose-jwt.version>
     <spring-boot-starter-jdbc.version>2.3.0.RELEASE</spring-boot-starter-jdbc.version>
+    <docker.maven.plugin.version>1.2.2</docker.maven.plugin.version>
+
   </properties>
 
   <dependencies>

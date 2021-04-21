@@ -3,13 +3,22 @@ server:
 spring:
   application:
     name: blah-gateway
-
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: lb://blah-oauth/rsa/publicKey #RSA公钥
+  redis:
+    database: 0
+    port: 6379
+    host: ${REDIS_ADDR}
+    password:
   cloud:
     gateway:
       discovery:
         locator:
           enabled: true
-          lower-case-service-id: true #使用小写service-id
+          lower-case-service-id: true
       routes: #配置路由路径
         - id: blah-api
           uri: lb://blah-api

@@ -17,8 +17,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests()
         .requestMatchers(EndpointRequest.toAnyEndpoint())
         .permitAll()
+        .and()
+        .authorizeRequests()
+        .antMatchers("/rsa/getPublicKey")
+        .permitAll()
         .anyRequest()
-        .authenticated();
+        .authenticated()
+        .and()
+        .csrf()
+        .disable();
   }
 
   @Bean

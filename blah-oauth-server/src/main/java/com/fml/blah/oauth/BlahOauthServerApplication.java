@@ -10,6 +10,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @SpringBootApplication
 public class BlahOauthServerApplication {
   public static void main(String[] args) {
-    SpringApplication.run(BlahOauthServerApplication.class, args);
+    var applicationContext = SpringApplication.run(BlahOauthServerApplication.class, args);
+    String userAge = applicationContext.getEnvironment().getProperty("spring.datasource.url");
+    System.err.println(" age: " + userAge);
   }
 }

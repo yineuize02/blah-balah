@@ -1,8 +1,17 @@
+server:
+  port: 8882
 spring:
+  application:
+    name: blah-oauth
+  profiles:
+    active: dev
   cloud:
     nacos:
       discovery:
         server-addr: ${NACOS_ADDR}
       config:
         server-addr: ${NACOS_ADDR}
-        file-extension: yaml
+        file-extension: yml
+        group: DEFAULT_GROUP  # 缺省即可
+        prefix: ${spring.application.name} # 缺省即可
+        namespace: ${spring.profiles.active}

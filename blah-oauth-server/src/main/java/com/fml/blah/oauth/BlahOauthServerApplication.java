@@ -12,6 +12,6 @@ public class BlahOauthServerApplication {
   public static void main(String[] args) {
     var applicationContext = SpringApplication.run(BlahOauthServerApplication.class, args);
     String userAge = applicationContext.getEnvironment().getProperty("spring.datasource.url");
-    System.err.println(" age: " + userAge);
+    System.err.println(" spring.datasource.url: " + userAge);
   }
 }

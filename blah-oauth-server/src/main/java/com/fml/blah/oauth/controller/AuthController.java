@@ -1,5 +1,6 @@
 package com.fml.blah.oauth.controller;
 
+import com.fml.blah.common.vo.WebResponse;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import java.security.KeyPair;
@@ -17,18 +18,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("oauth")
+@RequestMapping("/oauth")
 public class AuthController {
   @Autowired private TokenEndpoint tokenEndpoint;
   @Autowired private KeyPair keyPair;
 
   @PostMapping("/token")
-  public OAuth2AccessToken postAccessToken(
+  public WebResponse<OAuth2AccessToken> postAccessToken(
       Principal principal, @RequestParam Map<String, String> parameters)
       throws HttpRequestMethodNotSupportedException {
 
     var oAuth2AccessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
-    return oAuth2AccessToken;
+    return WebResponse.ok(oAuth2AccessToken);
   }
 
   @GetMapping("/rsa/getPublicKey")

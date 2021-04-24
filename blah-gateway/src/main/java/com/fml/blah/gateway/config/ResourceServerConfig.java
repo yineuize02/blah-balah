@@ -1,6 +1,7 @@
 package com.fml.blah.gateway.config;
 
 import cn.hutool.core.util.ArrayUtil;
+import com.fml.blah.common.constants.AuthConstants;
 import com.fml.blah.gateway.AuthorizationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -55,8 +56,8 @@ public class ResourceServerConfig {
       jwtAuthenticationConverter() {
     JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter =
         new JwtGrantedAuthoritiesConverter();
-    jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
-    jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("authorities");
+    jwtGrantedAuthoritiesConverter.setAuthorityPrefix(AuthConstants.ROLE_PREFIX);
+    jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName(AuthConstants.AUTHORITIES_CLAIM_NAME);
 
     JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
     jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);

@@ -1,0 +1,7 @@
+server:
+  port: 8880
+spring:
+  application:
+    name: blah-api
+  profiles:
+    active: dev,common

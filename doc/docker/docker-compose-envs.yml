@@ -94,3 +94,16 @@ services:
       - "MODE=standalone"
     ports:
       - 8848:8848
+
+  zipkin:
+    image: openzipkin/zipkin
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      # Point the zipkin at the storage backend
+      - ES_HOSTS=elasticsearch
+      # Uncomment to see requests to and from elasticsearch
+      # - ES_HTTP_LOGGING=BODY
+    depends_on:
+      - elasticsearch
+
+

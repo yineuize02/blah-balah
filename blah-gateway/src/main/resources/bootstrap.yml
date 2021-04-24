@@ -1,8 +1,21 @@
+server:
+  port: 8801
 spring:
-  cloud:
-    nacos:
-      discovery:
-        server-addr: ${NACOS_ADDR}
-      config:
-        server-addr: ${NACOS_ADDR}
-        file-extension: yaml
+  application:
+    name: blah-gateway
+  profiles:
+    active: dev,common
+
+
+
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: ${NACOS_ADDR}
+#      config:
+#        server-addr: ${NACOS_ADDR}
+#        file-extension: yaml
+
+#logging:
+#  level:
+#    root: debug

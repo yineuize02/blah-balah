@@ -19,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         .and()
         .authorizeRequests()
-        .antMatchers("oauth/rsa/getPublicKey")
+        .antMatchers("/oauth/rsa/getPublicKey")
         .permitAll()
         .anyRequest()
         .authenticated()

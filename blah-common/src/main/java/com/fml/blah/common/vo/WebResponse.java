@@ -1,8 +1,11 @@
 package com.fml.blah.common.vo;
 
 import com.fml.blah.common.constants.ResponseMessageConstants;
+import java.io.Serializable;
+import lombok.Data;
 
-public class WebResponse<T> {
+@Data
+public class WebResponse<T> implements Serializable {
 
   private String message;
   private T data;

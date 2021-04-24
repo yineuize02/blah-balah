@@ -1,5 +1,6 @@
 package com.fml.blah.gateway.config;
 
+import cn.hutool.core.util.ArrayUtil;
 import com.fml.blah.gateway.AuthorizationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,57 +22,28 @@ import reactor.core.publisher.Mono;
 public class ResourceServerConfig {
   @Autowired private AuthorizationManager authorizationManager;
   @Autowired private BlahServerAuthenticationEntryPoint blahServerAuthenticationEntryPoint;
+  @Autowired private BlahServerAccessDeniedHandler blahServerAccessDeniedHandler;
+  @Autowired private WhiteListConfig whiteListConfig;
 
   @Bean
   public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
     http.oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter());
     http.oauth2ResourceServer().authenticationEntryPoint(blahServerAuthenticationEntryPoint);
     http.authorizeExchange()
-        //        .pathMatchers(ArrayUtil.toArray(whiteListConfig.getUrls(), String.class))
-        //        .permitAll()
+        .pathMatchers(ArrayUtil.toArray(whiteListConfig.getUrls(), String.class))
+        .permitAll()
         .anyExchange()
         .access(authorizationManager)
         .and()
-        // .exceptionHandling()
-        //        .accessDeniedHandler(accessDeniedHandler()) // 处理未授权
-        //        .authenticationEntryPoint(authenticationEntryPoint()) // 处理未认证
-        // .and()
+        .exceptionHandling()
+        .accessDeniedHandler(blahServerAccessDeniedHandler) // 处理未授权
+        .authenticationEntryPoint(blahServerAuthenticationEntryPoint) // 处理未认证
+        .and()
         .csrf()
         .disable();
 
     return http.build();
   }
-
-  //  /**
-  //   * 未授权
-  //   *
-  //   * @return
-  //   */
-  //  @Bean
-  //  ServerAccessDeniedHandler accessDeniedHandler() {
-  //    return (exchange, denied) -> {
-  //      Mono<Void> mono =
-  //          Mono.defer(() -> Mono.just(exchange.getResponse()))
-  //              .flatMap(
-  //                  response ->
-  //                      WebUtils.writeFailedToResponse(response, ResultCode.ACCESS_UNAUTHORIZED));
-  //      return mono;
-  //    };
-  //  }
-  //
-  //  /** token无效或者已过期自定义响应 */
-  //  @Bean
-  //  ServerAuthenticationEntryPoint authenticationEntryPoint() {
-  //    return (exchange, e) -> {
-  //      Mono<Void> mono =
-  //          Mono.defer(() -> Mono.just(exchange.getResponse()))
-  //              .flatMap(
-  //                  response ->
-  //                      WebUtils.writeFailedToResponse(
-  //                          response, ResultCode.TOKEN_INVALID_OR_EXPIRED));
-  //      return mono;
-  //    };
-  //  }
 
   /**
    * @linkhttps://blog.csdn.net/qq_24230139/article/details/105091273

@@ -26,3 +26,8 @@ spring:
             - Path=/blah-api/**
           filters:
             - StripPrefix=1
+blah:
+  whitelist:
+    urls:
+      - "/oauth/token"
+      - "/oauth/rsa/publicKey"

@@ -12,6 +12,11 @@
   <artifactId>blah-gateway</artifactId>
   <dependencies>
     <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-common</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
     </dependency>
@@ -35,6 +40,7 @@
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-oauth2-jose</artifactId>
     </dependency>
+
 
   </dependencies>
 

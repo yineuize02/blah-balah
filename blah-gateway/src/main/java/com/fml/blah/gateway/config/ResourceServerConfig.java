@@ -1,5 +1,6 @@
-package com.fml.blah.gateway;
+package com.fml.blah.gateway.config;
 
+import com.fml.blah.gateway.AuthorizationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,11 +20,12 @@ import reactor.core.publisher.Mono;
 @EnableWebFluxSecurity
 public class ResourceServerConfig {
   @Autowired private AuthorizationManager authorizationManager;
+  @Autowired private BlahServerAuthenticationEntryPoint blahServerAuthenticationEntryPoint;
 
   @Bean
   public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
     http.oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter());
-    // http.oauth2ResourceServer().authenticationEntryPoint(authenticationEntryPoint());
+    http.oauth2ResourceServer().authenticationEntryPoint(blahServerAuthenticationEntryPoint);
     http.authorizeExchange()
         //        .pathMatchers(ArrayUtil.toArray(whiteListConfig.getUrls(), String.class))
         //        .permitAll()

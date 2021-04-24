@@ -20,6 +20,7 @@
     <module>blah-gateway</module>
     <module>blah-api</module>
     <module>blah-oauth-server</module>
+    <module>blah-common</module>
   </modules>
 
 
@@ -76,6 +77,11 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.fml</groupId>
+        <artifactId>blah-common</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <!--Spring Cloud 相关依赖-->
       <dependency>
         <groupId>org.springframework.cloud</groupId>

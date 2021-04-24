@@ -1,4 +1,4 @@
-package constants;
+package com.fml.blah.common.constants;
 
 public interface ResponseMessageConstants {
   String UNAUTHORIZED = "UNAUTHORIZED";

@@ -1,8 +1,9 @@
-package vo;
+package com.fml.blah.common.vo;
 
-import constants.ResponseMessageConstants;
+import com.fml.blah.common.constants.ResponseMessageConstants;
 
 public class WebResponse<T> {
+
   private String message;
   private T data;
 

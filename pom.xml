@@ -21,6 +21,7 @@
     <module>blah-api</module>
     <module>blah-oauth-server</module>
     <module>blah-common</module>
+    <module>blah-dao</module>
   </modules>
 
 

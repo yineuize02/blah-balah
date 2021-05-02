@@ -96,13 +96,15 @@ services:
       - 8848:8848
 
   zipkin:
-    image: openzipkin/zipkin
+    image: openzipkin/zipkin:2.23.2
     environment:
       - STORAGE_TYPE=elasticsearch
       # Point the zipkin at the storage backend
       - ES_HOSTS=elasticsearch
       # Uncomment to see requests to and from elasticsearch
       # - ES_HTTP_LOGGING=BODY
+    ports:
+      - 9411:9411
     depends_on:
       - elasticsearch
 

@@ -19,12 +19,6 @@
     <dependency>
       <groupId>com.fml</groupId>
       <artifactId>blah-common-config</artifactId>
-      <!--      <exclusions>-->
-      <!--        <exclusion>-->
-      <!--          <groupId>org.springframework.cloud</groupId>-->
-      <!--          <artifactId>spring-cloud-starter-zipkin</artifactId>-->
-      <!--        </exclusion>-->
-      <!--      </exclusions>-->
     </dependency>
     <dependency>
       <groupId>org.springframework.cloud</groupId>

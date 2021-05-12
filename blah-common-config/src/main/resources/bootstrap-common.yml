@@ -9,9 +9,18 @@ spring:
         group: DEFAULT_GROUP  # 缺省即可
         prefix: ${spring.application.name} # 缺省即可
         namespace: dev
-
+        shared-configs[0]:
+          data-id: blah-share-config.yml
+          group: DEFAULT_GROUP
+          refresh: true
   zipkin:
     base-url: http://${ZIPKIN_ADDR:192.168.230.128:9411}
     sleuth:
       sampler:
         probability: 0.1 #设置Sleuth的抽样收集概率
+
+logstash:
+  host: ${LOGSTASH_ADDR:192.168.230.128}
+  logging:
+    level:
+      root: info

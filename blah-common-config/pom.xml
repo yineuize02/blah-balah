@@ -12,6 +12,10 @@
   <artifactId>blah-common-config</artifactId>
   <dependencies>
     <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-common-pojo</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
     </dependency>
@@ -19,11 +23,7 @@
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>com.alibaba.nacos</groupId>-->
-<!--      <artifactId>nacos-client</artifactId>-->
-<!--      <version>1.3.0</version>-->
-<!--    </dependency>-->
+
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-zipkin</artifactId>

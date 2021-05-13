@@ -13,7 +13,7 @@
   <dependencies>
     <dependency>
       <groupId>com.fml</groupId>
-      <artifactId>blah-common</artifactId>
+      <artifactId>blah-common-pojo</artifactId>
     </dependency>
 
     <dependency>

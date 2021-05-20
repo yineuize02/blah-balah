@@ -1,0 +1,5 @@
+server:
+  port: 8879
+spring:
+  application:
+    name: blah-user

@@ -9,7 +9,13 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>blah-common-pojo</artifactId>
+  <packaging>pom</packaging>
 
+
+  <artifactId>blah-commons</artifactId>
+  <modules>
+    <module>blah-common-config</module>
+    <module>blah-common-pojo</module>
+  </modules>
 
 </project>

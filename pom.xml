@@ -20,9 +20,8 @@
     <module>blah-gateway</module>
     <module>blah-api</module>
     <module>blah-oauth-server</module>
-    <module>blah-common-pojo</module>
-    <module>blah-dao</module>
-    <module>blah-common-config</module>
+    <module>blah-user</module>
+    <module>blah-commons</module>
   </modules>
 
 
@@ -45,7 +44,7 @@
     <nimbus-jose-jwt.version>8.16</nimbus-jose-jwt.version>
     <spring-boot-starter-jdbc.version>2.3.0.RELEASE</spring-boot-starter-jdbc.version>
     <docker.maven.plugin.version>1.2.2</docker.maven.plugin.version>
-
+    <mybatis-plus.version>3.4.2</mybatis-plus.version>
   </properties>
 
   <dependencies>
@@ -146,6 +145,13 @@
         <artifactId>mybatis</artifactId>
         <version>${mybatis.version}</version>
       </dependency>
+
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus</artifactId>
+        <version>${mybatis-plus.version}</version>
+      </dependency>
+
       <!-- jdbc -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -199,20 +205,36 @@
   </dependencyManagement>
 
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-            </exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
 
+        <plugin>
+          <groupId>com.spotify</groupId>
+          <artifactId>dockerfile-maven-plugin</artifactId>
+          <version>1.4.13</version>
+          <executions>
+            <execution>
+              <id>default</id>
+              <goals>
+                <goal>build</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <repository>com.foo/${project.artifactId}</repository>
+            <tag>${project.version}</tag>
+            <buildArgs>
+              <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+            </buildArgs>
+          </configuration>
+        </plugin>
+
+      </plugins>
+
+    </pluginManagement>
+  </build>
 </project>

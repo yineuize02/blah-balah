@@ -4,8 +4,13 @@ services:       # 容器
     image: 'jenkins/jenkins:lts'    # 镜像
     container_name: jenkins         # 容器名称
     restart: always                 # 同 --restart 参数
+    privileged: true
+    user: root
     ports:                          # 端口映射，同 -p 参数，本地端口:容器端口
       - '8080:8080'
       - '50000:50000'
     volumes:                        # 数据卷,本地文件夹:容器文件夹
       - '/data/docker/jenkins:/var/jenkins_home'
+      - '/data/docker/jenkins_container_home:/home'
+      - '/usr/bin/docker'
+      - '/var/run/docker.sock:/var/run/docker.sock'

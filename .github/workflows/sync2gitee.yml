@@ -1,5 +1,5 @@
 # This is a basic workflow to help you get started with Actions
-
+# Github仓库同步到Gitee
 name: sync2gitee
 
 # Controls when the action will run. 
@@ -14,8 +14,13 @@ on:
 jobs:
   repo-sync:
     env:
+      # 1.本地生成 SSH 密钥 ssh-keygen -t rsa -C "Gitee"
+      # 2.将 SSH 公钥添加到 Gitee 公钥
+      # 3.将私钥添加到 Github 项目的 secrets 中
       dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+      # 在gitee生成的私人令牌 personal_access_tokens
       dst_token: ${{ secrets.GITEE_TOKEN }}
+      # Gitee user id
       gitee_user: ${{ secrets.GITEE_USER }}
     runs-on: ubuntu-latest
     steps:

@@ -12,7 +12,7 @@
   <packaging>jar</packaging>
 
   <properties>
-    <docker.repostory>127.0.0.1:5001</docker.repostory>
+    <docker.repository>127.0.0.1:5001</docker.repository>
   </properties>
 
 
@@ -54,7 +54,7 @@
         <groupId>com.spotify</groupId>
         <artifactId>dockerfile-maven-plugin</artifactId>
         <configuration>
-          <repository>${docker.repostory}/${project.artifactId}</repository>
+          <repository>${docker.repository}/${project.artifactId}</repository>
         </configuration>
       </plugin>
     </plugins>

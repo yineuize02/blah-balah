@@ -12,5 +12,12 @@ services:       # 容器
     volumes:                        # 数据卷,本地文件夹:容器文件夹
       - '/data/docker/jenkins:/var/jenkins_home'
       - '/data/docker/jenkins_container_home:/home'
-      - '/usr/bin/docker'
+      - '/usr/bin/docker:/usr/bin/docker'
       - '/var/run/docker.sock:/var/run/docker.sock'
+  nexus:
+    image: 'sonatype/nexus3'
+    ports:                          # 端口映射，同 -p 参数，本地端口:容器端口
+      - '8081:8081'
+      - '5001:5001'
+    volumes:
+      - '/data/docker/nexus_data:/nexus-data'

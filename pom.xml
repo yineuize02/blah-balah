@@ -45,7 +45,6 @@
     <spring-boot-starter-jdbc.version>2.3.0.RELEASE</spring-boot-starter-jdbc.version>
     <docker.maven.plugin.version>1.2.2</docker.maven.plugin.version>
     <mybatis-plus.version>3.4.2</mybatis-plus.version>
-    <docker.repostory>127.0.0.1:5001</docker.repostory>
   </properties>
 
   <dependencies>
@@ -222,12 +221,10 @@
               <id>default</id>
               <goals>
                 <goal>build</goal>
-                <goal>push</goal>
               </goals>
             </execution>
           </executions>
           <configuration>
-            <repository>${docker.repostory}/${project.artifactId}</repository>
             <tag>latest</tag>
             <buildArgs>
               <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>

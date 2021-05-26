@@ -1,4 +1,4 @@
-export name=blah-user
+export name=$JOB_NAME
 export imageId=$(cat $name/target/docker/image-id)
 export tag=$(cat $name/target/docker/tag)
 export dest=$docker_repository:5001

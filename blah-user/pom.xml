@@ -15,7 +15,6 @@
     <docker.repository>192.168.230.129:5001</docker.repository>
   </properties>
 
-
   <artifactId>blah-user</artifactId>
   <dependencies>
     <dependency>

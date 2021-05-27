@@ -54,6 +54,7 @@
         <artifactId>dockerfile-maven-plugin</artifactId>
         <configuration>
           <repository>${docker.repository}/${project.artifactId}</repository>
+          <tag>${version}</tag>
         </configuration>
       </plugin>
     </plugins>

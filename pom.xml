@@ -22,6 +22,7 @@
     <module>blah-oauth-server</module>
     <module>blah-user</module>
     <module>blah-commons</module>
+    <module>mybatis-plus-generator</module>
   </modules>
 
 

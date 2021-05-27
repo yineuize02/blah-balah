@@ -30,10 +30,10 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>com.fml</groupId>-->
-    <!--      <artifactId>blah-common-config</artifactId>-->
-    <!--    </dependency>-->
+    <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-common-config</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
@@ -55,7 +55,7 @@
         <artifactId>dockerfile-maven-plugin</artifactId>
         <configuration>
           <repository>${docker.repository}/${project.artifactId}</repository>
-          <tag>${version}</tag>
+          <tag>${project.version}</tag>
         </configuration>
       </plugin>
     </plugins>

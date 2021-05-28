@@ -66,7 +66,7 @@ public class MybatisplusGenerator {
     PackageConfig pc = new PackageConfig();
     // pc.setModuleName("blah-user");
     pc.setModuleName(scanner("模块名"));
-    pc.setParent("com.fml");
+    pc.setParent("com.fml.blah");
     mpg.setPackageInfo(pc);
 
     // 自定义配置

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fml.blah.user.mapper.UsersMapper">
+  <update id="batchUpdate" parameterType="com.fml.blah.user.entity.Users">
+    INSERT INTO blah_user.users (`id`, `user_name`, `password`)
+    VALUES
+    <foreach collection="list" item="item" separator=",">
+      (
+      #{item.id},
+      #{item.userName},
+      #{item.password}
+      )
+    </foreach>
+    ON DUPLICATE KEY UPDATE `user_name` = VALUES(`user_name`),
+    `password`=VALUES(`password`);
+  </update>
+</mapper>

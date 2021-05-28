@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MysqlGenerator {
+public class MybatisplusGenerator {
   /** 读取控制台内容 */
   public static String scanner(String tip) {
     Scanner scanner = new Scanner(System.in);
@@ -43,24 +43,30 @@ public class MysqlGenerator {
     GlobalConfig gc = new GlobalConfig();
     String projectPath = System.getProperty("user.dir");
     gc.setOutputDir(projectPath + "/mybatis-plus-sample-generator/src/main/java");
-    gc.setAuthor("jobob");
+    gc.setAuthor("y");
     gc.setOpen(false);
     mpg.setGlobalConfig(gc);
 
+    String dataBaseName = scanner("Database");
+    // String dataBaseName = "blah_user";
+
     // 数据源配置
     DataSourceConfig dsc = new DataSourceConfig();
-    dsc.setUrl(
-        "jdbc:mysql://localhost:3306/ant?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8");
-    // dsc.setSchemaName("public");
-    dsc.setDriverName("com.mysql.jdbc.Driver");
+    String url =
+        String.format(
+            "jdbc:mysql://192.168.230.128:3306/%s?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8",
+            dataBaseName);
+    dsc.setUrl(url);
+    dsc.setDriverName("com.mysql.cj.jdbc.Driver");
     dsc.setUsername("root");
-    dsc.setPassword("1q2w3e4r");
+    dsc.setPassword("root");
     mpg.setDataSource(dsc);
 
     // 包配置
     PackageConfig pc = new PackageConfig();
+    // pc.setModuleName("blah-user");
     pc.setModuleName(scanner("模块名"));
-    pc.setParent("com.baomidou.mybatisplus.samples.generator");
+    pc.setParent("com.fml");
     mpg.setPackageInfo(pc);
 
     // 自定义配置
@@ -95,12 +101,14 @@ public class MysqlGenerator {
     StrategyConfig strategy = new StrategyConfig();
     strategy.setNaming(NamingStrategy.underline_to_camel);
     strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-    strategy.setSuperEntityClass("com.baomidou.mybatisplus.samples.generator.common.BaseEntity");
+    //
+    // strategy.setSuperEntityClass("com.baomidou.mybatisplus.samples.generator.common.BaseEntity");
     strategy.setEntityLombokModel(true);
-    strategy.setSuperControllerClass(
-        "com.baomidou.mybatisplus.samples.generator.common.BaseController");
-    strategy.setInclude(scanner("表名"));
-    strategy.setSuperEntityColumns("id");
+    //    strategy.setSuperControllerClass(
+    //        "com.baomidou.mybatisplus.samples.generator.common.BaseController");
+    // strategy.setInclude(scanner("表名"));
+    // strategy.setInclude("users");
+    //  strategy.setSuperEntityColumns("id");
     strategy.setControllerMappingHyphenStyle(true);
     strategy.setTablePrefix(pc.getModuleName() + "_");
     mpg.setStrategy(strategy);

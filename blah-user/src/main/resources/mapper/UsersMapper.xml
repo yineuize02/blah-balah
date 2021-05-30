@@ -2,17 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fml.blah.user.mapper.UsersMapper">
-  <update id="batchUpdate" parameterType="com.fml.blah.user.entity.Users">
-    INSERT INTO blah_user.users (`id`, `user_name`, `password`)
+  <update id="batchInsertOrUpdate" parameterType="com.fml.blah.user.entity.Users">
+    INSERT INTO blah_user.users (`id`, `user_name`, `password`,`created_at`,`updated_at`)
     VALUES
     <foreach collection="list" item="item" separator=",">
       (
       #{item.id},
       #{item.userName},
-      #{item.password}
+      #{item.password},
+      #{item.createdAt},
+      #{item.updatedAt}
       )
     </foreach>
-    ON DUPLICATE KEY UPDATE `user_name` = VALUES(`user_name`),
-    `password`=VALUES(`password`);
+    ON DUPLICATE KEY UPDATE
+    `user_name` = VALUES(`user_name`),
+    `password`=VALUES(`password`),
+    `created_at`=VALUES(`created_at`),
+    `updated_at`=VALUES(`updated_at`);
   </update>
 </mapper>

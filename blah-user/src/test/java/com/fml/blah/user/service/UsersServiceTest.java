@@ -5,12 +5,15 @@ import com.fml.blah.user.entity.Users;
 import com.fml.blah.user.mapper.UsersMapper;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@Slf4j
 public class UsersServiceTest extends ServiceTestBase {
   @Autowired private UsersMapper usersMapper;
+  @Autowired private IUsersService usersService;
 
   @Test
   public void testBatchUpdate() {

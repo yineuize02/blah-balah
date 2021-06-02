@@ -4,6 +4,7 @@ import com.fml.blah.test.ServiceTestBase;
 import com.fml.blah.user.entity.Users;
 import com.fml.blah.user.mapper.UsersMapper;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -40,5 +41,24 @@ public class UsersServiceTest extends ServiceTestBase {
 
     var u3 = usersMapper.selectById(user3.getId());
     Assert.assertEquals(user3.getUserName(), u3.getUserName());
+  }
+
+  @Test
+  public void testMax() {
+    int max = 20000;
+    List<Users> usersList = new ArrayList<>(max);
+
+    for (int i = 0; i < max; i++) {
+      var time = System.currentTimeMillis();
+      var user = new Users();
+      user.setId(Integer.toUnsignedLong(i));
+      user.setUserName("foo" + time);
+      user.setPassword("bar" + time);
+      user.setCreatedAt(LocalDateTime.now());
+      user.setUpdatedAt(LocalDateTime.now());
+      usersList.add(user);
+    }
+
+    usersMapper.batchInsertOrUpdate(usersList);
   }
 }

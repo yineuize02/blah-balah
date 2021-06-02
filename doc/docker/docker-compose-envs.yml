@@ -1,4 +1,5 @@
-version: '3'
+version: '3.3'
+
 services:
   mysql:
     image: mysql:5.7
@@ -8,6 +9,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root #设置root帐号密码
       TZ: Asia/Shanghai
+      MYSQL_DATABASE: nacos_devtest
+      MYSQL_USER: nacos
+      MYSQL_PASSWORD: nacos
     ports:
       - 3306:3306
     volumes:
@@ -22,24 +26,24 @@ services:
       - /mydata/redis/data:/data #数据文件挂载
     ports:
       - 6379:6379
-  nginx:
-    image: nginx:1.10
-    container_name: nginx
-    volumes:
-      - /mydata/nginx/conf:/etc/nginx #配置文件挂载
-      - /mydata/nginx/html:/usr/share/nginx/html #静态资源根目录挂载
-      - /mydata/nginx/log:/var/log/nginx #日志文件挂载
-    ports:
-      - 80:80
-  rabbitmq:
-    image: rabbitmq:3.7.15-management
-    container_name: rabbitmq
-    volumes:
-      - /mydata/rabbitmq/data:/var/lib/rabbitmq #数据文件挂载
-      - /mydata/rabbitmq/log:/var/log/rabbitmq #日志文件挂载
-    ports:
-      - 5672:5672
-      - 15672:15672
+  #  nginx:
+  #    image: nginx:1.10
+  #    container_name: nginx
+  #    volumes:
+  #      - /mydata/nginx/conf:/etc/nginx #配置文件挂载
+  #      - /mydata/nginx/html:/usr/share/nginx/html #静态资源根目录挂载
+  #      - /mydata/nginx/log:/var/log/nginx #日志文件挂载
+  #    ports:
+  #      - 80:80
+  #  rabbitmq:
+  #    image: rabbitmq:3.7.15-management
+  #    container_name: rabbitmq
+  #    volumes:
+  #      - /mydata/rabbitmq/data:/var/lib/rabbitmq #数据文件挂载
+  #      - /mydata/rabbitmq/log:/var/log/rabbitmq #日志文件挂载
+  #    ports:
+  #      - 5672:5672
+  #      - 15672:15672
   elasticsearch:
     image: elasticsearch:7.6.2
     container_name: elasticsearch
@@ -81,20 +85,35 @@ services:
       - "elasticsearch.hosts=http://es:9200" #设置访问elasticsearch的地址
     ports:
       - 5601:5601
-  mongo:
-    image: mongo:4.2.5
-    container_name: mongo
-    volumes:
-      - /mydata/mongo/db:/data/db #数据文件挂载
-    ports:
-      - 27017:27017
+  #  mongo:
+  #    image: mongo:4.2.5
+  #    container_name: mongo
+  #    volumes:
+  #      - /mydata/mongo/db:/data/db #数据文件挂载
+  #    ports:
+  #      - 27017:27017
   nacos-registry:
     image: nacos/nacos-server:1.3.2
-    container_name: nacos-registry
+    container_name: nacos
+    volumes:
+      - /mydata/nacos/standalone-logs/:/home/nacos/logs
+      - /mydata/nacos/custom.properties:/home/nacos/init.d/custom.properties
     environment:
+      - "PREFER_HOST_MODE=hostname"
       - "MODE=standalone"
+      - "SPRING_DATASOURCE_PLATFORM=mysql"
+      - "MYSQL_SERVICE_HOST=mysql"
+      - "MYSQL_SERVICE_DB_NAME=nacos_devtest"
+      - "MYSQL_SERVICE_PORT=3306"
+      - "MYSQL_SERVICE_USER=nacos"
+      - "MYSQL_SERVICE_PASSWORD=nacos"
+      - "MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false"
     ports:
       - 8848:8848
+      - 9848:9848
+      - 9555:9555
+    depends_on:
+      - mysql
 
   zipkin:
     image: openzipkin/zipkin:2.23.2
@@ -108,5 +127,4 @@ services:
       - 9411:9411
     depends_on:
       - elasticsearch
-
 

@@ -1,0 +1,9 @@
+docker stop `docker ps -a | grep  8879 | awk '{print $1}'`
+docker stop `docker ps -a | grep  192.168.230.129:5001/blah-user:latest | awk '{print $1}'`
+docker rm `docker ps -a | grep  192.168.230.129:5001/blah-user:latest | awk '{print $1}'`
+docker volume rm `docker volume ls | grep local | awk '{print $2}'`
+
+mysqldump -h yourhostnameorIP -u root -p --no-data dbname > schema.sql
+mysqldump -h localhost -u root -proot --no-data blah_user > schema.sql
+docker exec mysql mysqldump -h localhost -u root -proot --no-data blah_user > blah_user_schema.sql
+docker exec mysql mysqldump -h localhost -u root -proot --no-data blah_auth > blah_auth_schema.sql

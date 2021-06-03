@@ -5,3 +5,8 @@ spring:
     name: blah-user
   profiles:
     active: dev,common
+
+mybatis-plus:
+  mapper-locations:
+    - classpath:mapper/*.xml
+    - classpath:mapper_extend/*.xml

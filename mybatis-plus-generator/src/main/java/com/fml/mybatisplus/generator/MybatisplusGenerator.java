@@ -45,6 +45,10 @@ public class MybatisplusGenerator {
     gc.setOutputDir(projectPath + "/mybatis-plus-sample-generator/src/main/java");
     gc.setAuthor("y");
     gc.setOpen(false);
+    gc.setBaseResultMap(true);
+    gc.setBaseColumnList(true);
+    gc.setServiceName("I%sMbpService");
+    gc.setServiceImplName("%sMbpServiceImpl");
     mpg.setGlobalConfig(gc);
 
     String dataBaseName = scanner("Database");
@@ -91,6 +95,25 @@ public class MybatisplusGenerator {
                     + tableInfo.getEntityName()
                     + "Mapper"
                     + StringPool.DOT_XML);
+          }
+        });
+
+    focList.add(
+        new FileOutConfig("/templates/fieldNames.java.ftl") {
+          @Override
+          public String outputFile(TableInfo tableInfo) {
+            return new String(
+                projectPath
+                    + "/mybatis-plus-sample-generator/src/main/java/"
+                    + pc.getParent().replace('.', '/')
+                    + "/"
+                    + "mapper"
+                    + "/"
+                    + "table_field_name"
+                    + "/"
+                    + tableInfo.getEntityName()
+                    + "FieldNames"
+                    + StringPool.DOT_JAVA);
           }
         });
     cfg.setFileOutConfigList(focList);

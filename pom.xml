@@ -22,6 +22,8 @@
     <module>blah-oauth-server</module>
     <module>blah-user</module>
     <module>blah-commons</module>
+    <module>mybatis-plus-generator</module>
+    <module>blah-test</module>
   </modules>
 
 
@@ -88,6 +90,11 @@
         <artifactId>blah-common-config</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.fml</groupId>
+        <artifactId>blah-test</artifactId>
+        <version>${project.version}</version>
+      </dependency>
 
       <!--Spring Cloud 相关依赖-->
       <dependency>
@@ -133,22 +140,28 @@
         <version>${hutool.version}</version>
       </dependency>
 
-      <!-- MyBatis 生成器 -->
-      <dependency>
-        <groupId>org.mybatis.generator</groupId>
-        <artifactId>mybatis-generator-core</artifactId>
-        <version>${mybatis-generator.version}</version>
-      </dependency>
-      <!-- MyBatis-->
-      <dependency>
-        <groupId>org.mybatis</groupId>
-        <artifactId>mybatis</artifactId>
-        <version>${mybatis.version}</version>
-      </dependency>
+      <!--      &lt;!&ndash; MyBatis 生成器 &ndash;&gt;-->
+      <!--      <dependency>-->
+      <!--        <groupId>org.mybatis.generator</groupId>-->
+      <!--        <artifactId>mybatis-generator-core</artifactId>-->
+      <!--        <version>${mybatis-generator.version}</version>-->
+      <!--      </dependency>-->
+      <!--      &lt;!&ndash; MyBatis&ndash;&gt;-->
+      <!--      <dependency>-->
+      <!--        <groupId>org.mybatis</groupId>-->
+      <!--        <artifactId>mybatis</artifactId>-->
+      <!--        <version>${mybatis.version}</version>-->
+      <!--      </dependency>-->
+
+      <!--      <dependency>-->
+      <!--        <groupId>com.baomidou</groupId>-->
+      <!--        <artifactId>mybatis-plus</artifactId>-->
+      <!--        <version>${mybatis-plus.version}</version>-->
+      <!--      </dependency>-->
 
       <dependency>
         <groupId>com.baomidou</groupId>
-        <artifactId>mybatis-plus</artifactId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
         <version>${mybatis-plus.version}</version>
       </dependency>
 
@@ -225,8 +238,6 @@
             </execution>
           </executions>
           <configuration>
-            <repository>com.foo/${project.artifactId}</repository>
-            <tag>${project.version}</tag>
             <buildArgs>
               <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
             </buildArgs>

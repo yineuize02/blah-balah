@@ -36,6 +36,10 @@
       <artifactId>blah-common-config</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-user-interface</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
     </dependency>

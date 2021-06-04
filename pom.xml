@@ -24,6 +24,7 @@
     <module>blah-commons</module>
     <module>mybatis-plus-generator</module>
     <module>blah-test</module>
+    <module>blah-user-interface</module>
   </modules>
 
 
@@ -93,6 +94,11 @@
       <dependency>
         <groupId>com.fml</groupId>
         <artifactId>blah-test</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fml</groupId>
+        <artifactId>blah-user-interface</artifactId>
         <version>${project.version}</version>
       </dependency>
 

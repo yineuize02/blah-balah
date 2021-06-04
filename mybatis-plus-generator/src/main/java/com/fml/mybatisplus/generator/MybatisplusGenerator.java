@@ -107,9 +107,7 @@ public class MybatisplusGenerator {
                     + "/mybatis-plus-sample-generator/src/main/java/"
                     + pc.getParent().replace('.', '/')
                     + "/"
-                    + "mapper"
-                    + "/"
-                    + "table_field_name"
+                    + "entity_table_field_name"
                     + "/"
                     + tableInfo.getEntityName()
                     + "FieldNames"

@@ -1,8 +1,8 @@
-package com.fml.blah.user.mapper.table_field_name;
+package com.fml.blah.user.entity_table_field_name;
 
 /**
  * @author y
- * @since 2021-06-03
+ * @since 2021-06-04
  */
 public interface UsersFieldNames {
   /** */

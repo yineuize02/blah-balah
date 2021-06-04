@@ -1,13 +1,13 @@
-package ${package.Mapper}.table_field_name;
+package ${package.Entity}_table_field_name;
 
 <#list table.importPackages as pkg>
-  import ${pkg};
+import ${pkg};
 </#list>
 
 /**
 * <p>
-  * ${table.comment!}
-  * </p>
+* ${table.comment!}
+* </p>
 *
 * @author ${author}
 * @since ${date}

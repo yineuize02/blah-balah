@@ -9,4 +9,4 @@ import com.fml.blah.user.entity.Users;
  * @author y
  * @since 2021-05-28
  */
-public interface IUsersService extends IService<Users> {}
+public interface IUsersMbpService extends IService<Users> {}

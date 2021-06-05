@@ -4,13 +4,13 @@ package com.fml.blah.user.entity_table_field_name;
  * @author y
  * @since 2021-06-05
  */
-public interface UsersFieldNames {
+public interface UsersRolesFieldNames {
   /** */
   String id = "id";
   /** */
-  String userName = "user_name";
+  String userId = "user_id";
   /** */
-  String password = "password";
+  String roleId = "role_id";
   /** */
   String createdAt = "created_at";
   /** */

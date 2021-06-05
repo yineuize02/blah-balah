@@ -1,7 +1,7 @@
 package com.fml.blah.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.fml.blah.user.entity.Users;
+import com.fml.blah.user.entity.UsersRoles;
 
 /**
  * Mapper 接口
@@ -9,4 +9,4 @@ import com.fml.blah.user.entity.Users;
  * @author y
  * @since 2021-06-05
  */
-public interface UsersMapper extends BaseMapper<Users> {}
+public interface UsersRolesMapper extends BaseMapper<UsersRoles> {}

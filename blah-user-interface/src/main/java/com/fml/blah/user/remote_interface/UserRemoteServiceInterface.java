@@ -1,7 +1,7 @@
 package com.fml.blah.user.remote_interface;
 
 import com.fml.blah.common.vo.WebResponse;
-import com.fml.blah.user.remote_interface.dto.UserDto;
+import com.fml.blah.user.remote_interface.dto.UserRolesDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface UserRemoteServiceInterface {
 
   @GetMapping("/getByUserName")
-  WebResponse<UserDto> getUserByName(@RequestParam String userName);
+  WebResponse<UserRolesDto> getUserByName(@RequestParam String userName);
 }

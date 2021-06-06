@@ -24,11 +24,12 @@ DROP TABLE IF EXISTS `roles`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `roles`
 (
-    `id`         bigint(20)                              NOT NULL,
+    `id`         bigint(20)                              NOT NULL AUTO_INCREMENT,
     `name`       varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
     `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `name` (`name`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -48,9 +49,10 @@ CREATE TABLE `users`
     `password`   varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
     `created_at` datetime                                               DEFAULT NULL,
     `updated_at` datetime                                               DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `username` (`user_name`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 50012
+  AUTO_INCREMENT = 2
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -64,7 +66,7 @@ DROP TABLE IF EXISTS `users_roles`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users_roles`
 (
-    `id`         bigint(20) NOT NULL,
+    `id`         bigint(20) NOT NULL AUTO_INCREMENT,
     `user_id`    bigint(20) NOT NULL,
     `role_id`    bigint(20) NOT NULL,
     `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -84,4 +86,4 @@ CREATE TABLE `users_roles`
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-05 18:12:12
+-- Dump completed on 2021-06-06 20:45:02

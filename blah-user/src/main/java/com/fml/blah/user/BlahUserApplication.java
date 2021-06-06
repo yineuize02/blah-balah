@@ -7,6 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableFeignClients
 @EnableDiscoveryClient
@@ -18,6 +21,11 @@ public class BlahUserApplication {
   public void init() {
     // NOTE: 这里强制设置为 UTC+8 的时区，和 rails 端保持一致
     TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
+  }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
   }
 
   public static void main(String[] args) {

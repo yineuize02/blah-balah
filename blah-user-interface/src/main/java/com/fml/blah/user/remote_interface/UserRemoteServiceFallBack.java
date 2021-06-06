@@ -1,7 +1,7 @@
 package com.fml.blah.user.remote_interface;
 
 import com.fml.blah.common.vo.WebResponse;
-import com.fml.blah.user.remote_interface.dto.UserDto;
+import com.fml.blah.user.remote_interface.dto.UserRolesDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class UserRemoteServiceFallBack implements UserRemoteServiceInterface {
 
   @Override
-  public WebResponse<UserDto> getUserByName(String userName) {
+  public WebResponse<UserRolesDto> getUserByName(String userName) {
     log.error("getUserByName fallback userName: " + userName);
     return WebResponse.fallback(null);
   }

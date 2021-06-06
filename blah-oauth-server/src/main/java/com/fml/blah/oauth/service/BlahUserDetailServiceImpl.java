@@ -3,8 +3,13 @@ package com.fml.blah.oauth.service;
 import com.fml.blah.common.constants.ResponseMessageConstants;
 import com.fml.blah.oauth.dto.BlahUserDetails;
 import com.fml.blah.user.remote_interface.UserRemoteServiceInterface;
+import com.fml.blah.user.remote_interface.dto.RoleDto;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -45,7 +50,16 @@ public class BlahUserDetailServiceImpl implements UserDetailsService {
 
     var userDetail = new BlahUserDetails();
     BeanUtils.copyProperties(user, userDetail);
-
+    var simpleGrantedAuthority =
+        Optional.ofNullable(user.getRoles())
+            .map(
+                r ->
+                    r.stream()
+                        .map(RoleDto::getName)
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList()))
+            .orElse(List.of());
+    userDetail.setAuthorities(simpleGrantedAuthority);
     return userDetail;
   }
 }

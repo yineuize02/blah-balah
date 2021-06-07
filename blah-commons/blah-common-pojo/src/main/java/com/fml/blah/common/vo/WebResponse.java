@@ -23,6 +23,10 @@ public class WebResponse<T> implements Serializable {
     return new WebResponse<>(ResponseMessageConstants.ERROR, data);
   }
 
+  public static <T> WebResponse<T> fallback(T data) {
+    return new WebResponse<>(ResponseMessageConstants.FALLBACK, data);
+  }
+
   public static <T> WebResponse<T> unauthorized(T data) {
     return new WebResponse<>(ResponseMessageConstants.UNAUTHORIZED, data);
   }

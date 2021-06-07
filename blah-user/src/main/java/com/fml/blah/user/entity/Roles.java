@@ -13,16 +13,14 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Users implements Serializable {
+public class Roles implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
   @TableId(value = "id", type = IdType.AUTO)
   private Long id;
 
-  private String userName;
-
-  private String password;
+  private String name;
 
   private LocalDateTime createdAt;
 

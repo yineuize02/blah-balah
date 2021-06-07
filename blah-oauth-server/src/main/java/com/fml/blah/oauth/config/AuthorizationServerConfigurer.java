@@ -2,7 +2,6 @@ package com.fml.blah.oauth.config;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +18,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 
 @Configuration
 public class AuthorizationServerConfigurer extends AuthorizationServerConfigurerAdapter {
-  @Autowired private DataSource dataSource;
   @Autowired private JwtTokenEnhancer jwtTokenEnhancer;
   @Autowired private JwtAccessTokenConverter accessTokenConverter;
   @Autowired private PasswordEncoder passwordEncoder;

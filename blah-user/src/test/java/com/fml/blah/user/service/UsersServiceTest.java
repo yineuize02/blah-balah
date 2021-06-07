@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.fml.blah.common.utils.BatchExecHelper;
 import com.fml.blah.test.ServiceTestBase;
 import com.fml.blah.user.entity.Users;
-import com.fml.blah.user.entity_table_field_name.UsersFieldNames;
 import com.fml.blah.user.mapper.UsersMapper;
 import com.fml.blah.user.mapper_extend.UsersExtendMapper;
 import com.fml.blah.user.service.UsersService.UserAddParam;
@@ -88,8 +87,8 @@ public class UsersServiceTest extends ServiceTestBase {
     Assert.assertEquals(Integer.valueOf(max), count);
     Assert.assertEquals(Integer.valueOf(max), sum);
 
-    wrapper.eq(UsersFieldNames.userName, usersList.get(0).getUserName());
-    var li = usersMapper.selectList(wrapper);
+    var liw = Wrappers.<Users>lambdaQuery().eq(Users::getUserName, usersList.get(0).getUserName());
+    var li = usersMapper.selectList(liw);
     Assert.assertNotEquals(0, li.size());
   }
 
@@ -102,7 +101,7 @@ public class UsersServiceTest extends ServiceTestBase {
     var user = usersMapper.selectById(100000);
     Assert.assertNull(user);
 
-    var user2 = usersMapper.selectOne(new QueryWrapper<Users>().eq(UsersFieldNames.id, 10000));
+    var user2 = usersMapper.selectOne(Wrappers.<Users>lambdaQuery().eq(Users::getId, 10000));
     Assert.assertNull(user2);
     var uin = new Users();
     uin.setId(999L);
@@ -125,8 +124,10 @@ public class UsersServiceTest extends ServiceTestBase {
     Assert.assertNotNull(u.getId());
 
     var u2 = new Users();
-
-    // usersMapper.insert()
+    u2.setUserName("5599");
+    u2.setPassword("xxxcccc");
+    usersMapper.insert(u2);
+    System.out.println("usersMapper.insert(u2); " + u2.getId());
   }
 
   @Test

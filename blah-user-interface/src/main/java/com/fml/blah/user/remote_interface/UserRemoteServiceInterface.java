@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "blah-user", fallback = UserRemoteServiceFallBack.class)
 public interface UserRemoteServiceInterface {
 
-  @GetMapping("/getByUserName")
+  @GetMapping("/get_by_user_name")
   WebResponse<UserRolesDto> getUserByName(@RequestParam String userName);
 }

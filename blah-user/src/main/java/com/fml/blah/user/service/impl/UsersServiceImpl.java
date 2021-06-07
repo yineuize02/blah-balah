@@ -1,11 +1,11 @@
 package com.fml.blah.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.fml.blah.common.exception.ServerErrorException;
 import com.fml.blah.user.entity.Users;
 import com.fml.blah.user.entity.UsersRoles;
 import com.fml.blah.user.entity_table_field_name.UsersFieldNames;
-import com.fml.blah.user.entity_table_field_name.UsersRolesFieldNames;
 import com.fml.blah.user.mapper.RolesMapper;
 import com.fml.blah.user.mapper.UsersRolesMapper;
 import com.fml.blah.user.remote_interface.dto.RoleDto;
@@ -51,8 +51,7 @@ public class UsersServiceImpl implements UsersService {
 
     var roleIds =
         usersRolesMapper
-            .selectList(
-                new QueryWrapper<UsersRoles>().eq(UsersRolesFieldNames.userId, user.getId()))
+            .selectList(Wrappers.<UsersRoles>lambdaQuery().eq(UsersRoles::getUserId, user.getId()))
             .stream()
             .map(UsersRoles::getRoleId)
             .collect(Collectors.toSet());

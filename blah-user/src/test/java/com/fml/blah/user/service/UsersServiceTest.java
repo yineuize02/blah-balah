@@ -1,6 +1,7 @@
 package com.fml.blah.user.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.fml.blah.common.utils.BatchExecHelper;
 import com.fml.blah.test.ServiceTestBase;
 import com.fml.blah.user.entity.Users;
@@ -52,6 +53,11 @@ public class UsersServiceTest extends ServiceTestBase {
 
     var u3 = usersMapper.selectById(user3.getId());
     Assert.assertEquals(user3.getUserName(), u3.getUserName());
+
+    var lambdaQueryWrapper =
+        Wrappers.<Users>lambdaQuery().eq(Users::getPassword, user3.getPassword());
+    var u3r = usersMapper.selectOne(lambdaQueryWrapper);
+    Assert.assertEquals(user3.getUserName(), u3r.getUserName());
   }
 
   // @Test
@@ -113,10 +119,14 @@ public class UsersServiceTest extends ServiceTestBase {
   @Test
   public void testSave() {
     var param = new UserAddParam();
-    param.setPassword(passwordEncoder.encode("123456"));
+    param.setPassword("123456");
     param.setUserName("222");
     var u = usersService.addUser(param);
     Assert.assertNotNull(u.getId());
+
+    var u2 = new Users();
+
+    // usersMapper.insert()
   }
 
   @Test

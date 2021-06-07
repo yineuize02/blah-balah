@@ -16,4 +16,9 @@ public interface UsersService {
     @NotNull private String userName;
     @NotNull private String password;
   }
+
+  class UserRoleCreateParam {
+    @NotNull private Long userId;
+    @NotNull private Long roleId;
+  }
 }

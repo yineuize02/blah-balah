@@ -1,11 +1,12 @@
 package com.fml.blah.user.controller;
 
 import com.fml.blah.common.vo.WebResponse;
-import com.fml.blah.user.remote_interface.dto.UserRolesDto;
+import com.fml.blah.remote_interface.user.dto.UserRolesDto;
 import com.fml.blah.user.service.UsersService;
 import com.fml.blah.user.service.UsersService.UserAddParam;
 import com.fml.blah.user.vo.UserVo;
 import javax.validation.constraints.NotNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author y
  * @since 2021-05-28
  */
+@Slf4j
 @RestController
 @RequestMapping("/users")
 public class UsersController {
@@ -36,6 +38,7 @@ public class UsersController {
   public WebResponse<UserRolesDto> getUserByName(@RequestParam @NotNull String userName) {
 
     var userDto = usersService.getUserInfoByName(userName);
+    log.error(WebResponse.ok(userDto).toString());
     return WebResponse.ok(userDto);
   }
 

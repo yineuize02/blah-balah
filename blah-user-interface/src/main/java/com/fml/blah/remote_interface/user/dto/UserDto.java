@@ -1,4 +1,4 @@
-package com.fml.blah.user.remote_interface.dto;
+package com.fml.blah.remote_interface.user.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

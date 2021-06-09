@@ -2,12 +2,12 @@ package com.fml.blah.oauth.service;
 
 import com.fml.blah.common.constants.ResponseMessageConstants;
 import com.fml.blah.oauth.dto.BlahUserDetails;
-import com.fml.blah.user.remote_interface.UserRemoteServiceInterface;
-import com.fml.blah.user.remote_interface.dto.RoleDto;
+import com.fml.blah.remote_interface.user.UserRemoteServiceInterface;
+import com.fml.blah.remote_interface.user.dto.RoleDto;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import org.springframework.beans.BeanUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,29 +16,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class BlahUserDetailServiceImpl implements UserDetailsService {
 
-  //  private List<BlahUserDetails> fooUserList;
   @Autowired private PasswordEncoder passwordEncoder;
   @Autowired private UserRemoteServiceInterface userRemoteService;
-
-  //  @PostConstruct
-  //  public void initData() {
-  //    var pass = passwordEncoder.encode("123456");
-  //    fooUserList = new ArrayList<>();
-  //    fooUserList.add(
-  //        new BlahUserDetails(
-  //            1L, "macro", pass, true, CollUtil.toList(new SimpleGrantedAuthority("ADMIN"))));
-  //    fooUserList.add(
-  //        new BlahUserDetails(
-  //            2L, "andy", pass, true, CollUtil.toList(new SimpleGrantedAuthority("TEST"))));
-  //  }
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
     var response = userRemoteService.getUserByName(username);
+    log.warn(response.toString());
     if (ResponseMessageConstants.FALLBACK.equals(response.getMessage())) {
       throw new UsernameNotFoundException("FALLBACK");
     }
@@ -48,18 +37,23 @@ public class BlahUserDetailServiceImpl implements UserDetailsService {
       throw new UsernameNotFoundException("USERNAME_PASSWORD_ERROR");
     }
 
-    var userDetail = new BlahUserDetails();
-    BeanUtils.copyProperties(user, userDetail);
-    var simpleGrantedAuthority =
+    var userAuthorities =
         Optional.ofNullable(user.getRoles())
             .map(
-                r ->
-                    r.stream()
+                l ->
+                    l.stream()
                         .map(RoleDto::getName)
-                        .map(SimpleGrantedAuthority::new)
+                        .map(s -> new SimpleGrantedAuthority(s))
                         .collect(Collectors.toList()))
             .orElse(List.of());
-    userDetail.setAuthorities(simpleGrantedAuthority);
+    var userDetail =
+        BlahUserDetails.builder()
+            .id(user.getId())
+            .username(user.getUserName())
+            .password(user.getPassword())
+            .enabled(true)
+            .authorities(userAuthorities)
+            .build();
     return userDetail;
   }
 }

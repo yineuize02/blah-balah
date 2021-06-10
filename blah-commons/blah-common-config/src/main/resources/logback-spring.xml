@@ -85,8 +85,8 @@
 
   <root level="INFO">
     <appender-ref ref="CONSOLE"/>
-    <appender-ref ref="FILE_INFO"/>
-    <appender-ref ref="LOG_STASH_INFO"/>
+    <!--    <appender-ref ref="FILE_INFO"/>-->
+    <!--    <appender-ref ref="LOG_STASH_INFO"/>-->
   </root>
 
 

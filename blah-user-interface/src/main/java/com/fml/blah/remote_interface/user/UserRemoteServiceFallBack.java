@@ -1,7 +1,7 @@
-package com.fml.blah.user.remote_interface;
+package com.fml.blah.remote_interface.user;
 
 import com.fml.blah.common.vo.WebResponse;
-import com.fml.blah.user.remote_interface.dto.UserRolesDto;
+import com.fml.blah.remote_interface.user.dto.UserRolesDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

@@ -14,4 +14,10 @@ public class UserRemoteServiceFallBack implements UserRemoteServiceInterface {
     log.error("getUserByName fallback userName: " + userName);
     return WebResponse.fallback(null);
   }
+
+  @Override
+  public WebResponse<UserRolesDto> createUser(UserAddParam param) {
+    log.error("createUser fallback param: " + param.getUserName());
+    return WebResponse.fallback(null);
+  }
 }

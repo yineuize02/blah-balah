@@ -42,14 +42,7 @@ public class UsersController {
   public WebResponse<UserRolesDto> getUserByName(
       @RequestParam @NotNull String userName, @RequestHeader Map<String, String> headers) {
 
-    ObjectMapper objectMapper = new ObjectMapper();
-    String header = null;
-    try {
-      header = objectMapper.writeValueAsString(headers);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-    }
-
+    String header = getHeaders(headers);
     log.warn(header);
 
     var userDto = usersService.getUserInfoByName(userName);
@@ -57,10 +50,26 @@ public class UsersController {
   }
 
   @PostMapping("create_user")
-  public WebResponse<UserVo> createUser(@RequestBody UserAddParam param) {
+  public WebResponse<UserVo> createUser(
+      @RequestBody UserAddParam param, @RequestHeader Map<String, String> headers) {
+
+    String header = getHeaders(headers);
+    log.warn(header);
+
     var user = usersService.addUser(param);
     var userVo = new UserVo();
     BeanUtils.copyProperties(user, userVo);
     return WebResponse.ok(userVo);
+  }
+
+  private String getHeaders(Map<String, String> headers) {
+    ObjectMapper objectMapper = new ObjectMapper();
+    String header = null;
+    try {
+      header = objectMapper.writeValueAsString(headers);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
+    return header;
   }
 }

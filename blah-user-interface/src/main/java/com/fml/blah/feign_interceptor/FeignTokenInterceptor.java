@@ -21,7 +21,7 @@ public class FeignTokenInterceptor implements RequestInterceptor {
 
     // 将获取Token对应的值往下面传
     var headers = getHeaders(request);
-    //  setHeader(headers, "authorization", requestTemplate);
+    setHeader(headers, "authorization", requestTemplate);
     setHeader(headers, "user", requestTemplate);
   }
 

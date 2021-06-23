@@ -11,9 +11,14 @@ import com.fml.blah.user.service.UsersService.UserAddParam;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +29,55 @@ public class UsersServiceTest extends ServiceTestBase {
   @Autowired private UsersExtendMapper usersExtendMapper;
   @Autowired private UsersService usersService;
   @Autowired private JdbcTemplate jdbcTemplate;
+  @Autowired private RedissonClient redissonClient;
+
+  @Test
+  public void redissonLockTest() {
+    var lock = redissonClient.getLock("lock_foo");
+    lock.lock(2L, TimeUnit.MINUTES);
+    var tryCurrent = lock.tryLock();
+    Assert.assertTrue(tryCurrent);
+    var t =
+        new Thread(
+            () -> {
+              var tryOther = lock.tryLock();
+              Assert.assertFalse(tryOther);
+            });
+    t.start();
+
+    try {
+      t.join();
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      lock.unlock();
+    }
+  }
+
+  @Test
+  public void redissonLockTest2() {
+    var lock = redissonClient.getLock("lock_foo");
+    lock.lock(2L, TimeUnit.MINUTES);
+    var tryCurrent = lock.tryLock();
+
+    Assert.assertTrue(tryCurrent);
+    CountDownLatch countDownLatch = new CountDownLatch(1);
+    ExecutorService executor = Executors.newFixedThreadPool(1);
+
+    executor.submit(
+        () -> {
+          var tryOther = lock.tryLock();
+
+          Assert.assertFalse(tryOther);
+          countDownLatch.countDown();
+        });
+    try {
+      countDownLatch.await();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    lock.unlock();
+  }
 
   @Test
   public void testBatchUpdate() {

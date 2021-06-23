@@ -27,24 +27,6 @@ services:
     ports:
       - 6379:6379
 
-  redis2:
-    image: redis:5
-    container_name: redis
-    command: redis-server #--appendonly yes
-    volumes:
-      - /mydata/redis2/data:/data #数据文件挂载
-    ports:
-      # 绑定容器的6379端口到主机的6381端口
-      - 6381:6379
-
-  redis3:
-    image: redis:5
-    container_name: redis
-    command: redis-server #--appendonly yes
-    volumes:
-      - /mydata/redis3/data:/data #数据文件挂载
-    ports:
-      - 6383:6379
   #  nginx:
   #    image: nginx:1.10
   #    container_name: nginx

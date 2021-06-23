@@ -91,6 +91,12 @@
         <artifactId>blah-common-config</artifactId>
         <version>${project.version}</version>
       </dependency>
+
+      <dependency>
+        <groupId>com.fml</groupId>
+        <artifactId>blah-common-redis</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.fml</groupId>
         <artifactId>blah-test</artifactId>

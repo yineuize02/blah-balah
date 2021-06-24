@@ -5,17 +5,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
-import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 @Slf4j
-@Service
 public class RedisUtils {
 
-  @Autowired private RedisTemplate<String, Object> redisTemplate;
+  private RedisTemplate<String, Object> redisTemplate;
+
+  public RedisUtils(RedisTemplate<String, Object> redisTemplate) {
+    this.redisTemplate = redisTemplate;
+  }
 
   /**
    * 指定缓存失效时间

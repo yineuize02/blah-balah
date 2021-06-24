@@ -16,6 +16,8 @@
   <modules>
     <module>blah-common-config</module>
     <module>blah-common-pojo</module>
+    <module>blah-common-redis</module>
+
   </modules>
 
 </project>

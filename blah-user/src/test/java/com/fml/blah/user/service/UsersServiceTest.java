@@ -1,20 +1,38 @@
 package com.fml.blah.user.service;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.fml.blah.common.redis.RedisUtils;
 import com.fml.blah.common.utils.BatchExecHelper;
 import com.fml.blah.test.ServiceTestBase;
 import com.fml.blah.user.entity.Users;
 import com.fml.blah.user.mapper.UsersMapper;
 import com.fml.blah.user.mapper_extend.UsersExtendMapper;
 import com.fml.blah.user.service.UsersService.UserAddParam;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -24,6 +42,133 @@ public class UsersServiceTest extends ServiceTestBase {
   @Autowired private UsersExtendMapper usersExtendMapper;
   @Autowired private UsersService usersService;
   @Autowired private JdbcTemplate jdbcTemplate;
+  @Autowired private RedissonClient redissonClient;
+
+  @Autowired private RedisTemplate<String, Object> redisTemplate;
+  @Autowired private RedisUtils redisUtils;
+
+  @EqualsAndHashCode(callSuper = true)
+  @Builder
+  @AllArgsConstructor
+  @NoArgsConstructor
+  @Data
+  static class RedisDTO extends Users {
+    private Integer ii;
+    private Long ll;
+    private BigDecimal bd;
+    private LocalDateTime time;
+    private LocalDate date;
+    private String name;
+    private List<RedisDTO> list;
+    private Map<String, RedisDTO> map;
+  }
+
+  @Test
+  public void redisUtilTest() {
+    var time = System.currentTimeMillis();
+    Users user1 = new Users();
+    user1.setId(1L);
+    user1.setPassword("foo_" + time);
+    user1.setUserName("bar_" + time);
+    user1.setCreatedAt(LocalDateTime.now());
+
+    RBucket<Users> bucket = redissonClient.getBucket("user1");
+    bucket.set(user1);
+
+    var result = bucket.get();
+    Assert.assertNotNull(result);
+    log.info(result.toString());
+
+    redisTemplate.opsForValue().set("user2", user1);
+    var obj = redisTemplate.opsForValue().get("user2");
+    log.info(obj.toString());
+
+    var redisDto0 =
+        RedisDTO.builder()
+            .bd(new BigDecimal("100.0092"))
+            .date(LocalDate.now())
+            .ii(22)
+            .ll(33L)
+            .list(new ArrayList<>())
+            .name("xyz")
+            .time(LocalDateTime.MAX)
+            .build();
+    redisDto0.setUserName("aaa");
+    redisDto0.setId(99L);
+    redisDto0.setCreatedAt(LocalDateTime.now());
+
+    var redisDto1 = BeanUtil.copyProperties(redisDto0, RedisDTO.class);
+    redisDto1.setList(new ArrayList<>(List.of(redisDto0, redisDto0)));
+    redisDto1.setMap(new HashMap<>(Map.of("dtoRBucket", redisDto0, "r2", redisDto0)));
+    RBucket<RedisDTO> dtorBucket = redissonClient.getBucket("dtoRBucket");
+    dtorBucket.set(redisDto1);
+    var rr = dtorBucket.get();
+    Assert.assertNotNull(rr);
+    log.info(rr.toString());
+
+    redisTemplate.opsForValue().set("dtoRedisTemplate", redisDto1);
+    var rr2 = redisTemplate.opsForValue().get("dtoRedisTemplate");
+    log.info(rr2.toString());
+
+    Assert.assertNotNull(rr2);
+
+    redisUtils.set("dtoRedisUtils", redisDto1);
+    var rr3 = redisUtils.get("dtoRedisUtils");
+    log.info(rr3.toString());
+
+    Assert.assertNotNull(rr3);
+  }
+
+  @Test
+  public void redissonLockTest() {
+    var lock = redissonClient.getLock("lock_bar");
+    lock.lock(2L, TimeUnit.MINUTES);
+    var tryCurrent = lock.tryLock();
+    Assert.assertTrue(tryCurrent);
+    lock.unlock();
+
+    var t =
+        new Thread(
+            () -> {
+              var tryOther = lock.tryLock();
+              Assert.assertFalse(tryOther);
+            });
+    t.start();
+
+    try {
+      t.join();
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      lock.unlock();
+    }
+  }
+
+  @Test
+  public void redissonLockTest2() {
+    var lock = redissonClient.getLock("lock_foo");
+    lock.lock(2L, TimeUnit.MINUTES);
+    var tryCurrent = lock.tryLock();
+    Assert.assertTrue(tryCurrent);
+    lock.unlock();
+
+    CountDownLatch countDownLatch = new CountDownLatch(1);
+    ExecutorService executor = Executors.newFixedThreadPool(1);
+
+    executor.submit(
+        () -> {
+          var tryOther = lock.tryLock();
+
+          Assert.assertFalse(tryOther);
+          countDownLatch.countDown();
+        });
+    try {
+      countDownLatch.await();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    lock.unlock();
+  }
 
   @Test
   public void testBatchUpdate() {

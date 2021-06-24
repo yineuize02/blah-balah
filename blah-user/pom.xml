@@ -29,6 +29,11 @@
     </dependency>
     <dependency>
       <groupId>com.fml</groupId>
+      <artifactId>blah-common-redis</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fml</groupId>
       <artifactId>blah-user-interface</artifactId>
     </dependency>
     <dependency>

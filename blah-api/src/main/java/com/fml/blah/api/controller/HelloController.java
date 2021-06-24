@@ -3,6 +3,8 @@ package com.fml.blah.api.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fml.blah.remote_interface.user.UserRemoteServiceInterface;
+import com.fml.blah.remote_interface.user.UserRemoteServiceInterface.UserAddParam;
+import java.time.LocalDateTime;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +26,12 @@ public class HelloController {
       e.printStackTrace();
     }
 
-    //   var uu = userService.getUserByName("11");
+    var uu =
+        userService.createUser(
+            UserAddParam.builder()
+                .userName(LocalDateTime.now().toString())
+                .password("12345")
+                .build());
     return header;
   }
 }

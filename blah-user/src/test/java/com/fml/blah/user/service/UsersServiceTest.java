@@ -120,6 +120,23 @@ public class UsersServiceTest extends ServiceTestBase {
   }
 
   @Test
+  public void testCache() {
+    jdbcTemplate.execute("truncate table blah_user.users;");
+    var param = new UserAddParam();
+    param.setPassword("123456");
+    param.setUserName("222");
+
+    var u = usersService.addUser(param);
+    Assert.assertNotNull(u.getId());
+    var info = usersService.getUserInfoByName(param.getUserName());
+    Assert.assertNotNull(info);
+    jdbcTemplate.execute("truncate table blah_user.users;");
+
+    var infoCache = usersService.getUserInfoByName(param.getUserName());
+    Assert.assertNotNull(infoCache);
+  }
+
+  @Test
   public void redissonLockTest() {
     var lock = redissonClient.getLock("lock_bar");
     lock.lock(2L, TimeUnit.MINUTES);
@@ -262,6 +279,8 @@ public class UsersServiceTest extends ServiceTestBase {
 
   @Test
   public void testSave() {
+    jdbcTemplate.execute("truncate table blah_user.users;");
+
     var param = new UserAddParam();
     param.setPassword("123456");
     param.setUserName("222");

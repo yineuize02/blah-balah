@@ -40,7 +40,8 @@ public class UsersServiceImpl implements UsersService {
     return user;
   }
 
-  @Cacheable("userinfo")
+  // 过期时间3600秒加随机0到100秒
+  @Cacheable("userinfo#3600#100")
   @Override
   public UserRolesDto getUserInfoByName(String userName) {
     var user =

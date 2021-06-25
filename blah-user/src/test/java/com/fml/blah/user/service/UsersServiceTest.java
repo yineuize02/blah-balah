@@ -134,6 +134,11 @@ public class UsersServiceTest extends ServiceTestBase {
 
     var infoCache = usersService.getUserInfoByName(param.getUserName());
     Assert.assertNotNull(infoCache);
+    param.setUserName("333");
+    usersService.addUser(param);
+
+    infoCache = usersService.getUserInfoByName(param.getUserName());
+    Assert.assertNotNull(infoCache);
   }
 
   @Test

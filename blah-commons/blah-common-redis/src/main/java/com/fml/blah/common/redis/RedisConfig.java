@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -50,7 +49,7 @@ public class RedisConfig {
   }
 
   @Bean
-  public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
+  public BlahRedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
     RedisCacheWriter redisCacheWriter =
         RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
     // 设置Redis缓存有效期为1天
@@ -59,7 +58,7 @@ public class RedisConfig {
             .serializeValuesWith(
                 RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
             .entryTtl(Duration.ofDays(1));
-    return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
+    return new BlahRedisCacheManager(redisCacheWriter, redisCacheConfiguration);
   }
 
   @Bean

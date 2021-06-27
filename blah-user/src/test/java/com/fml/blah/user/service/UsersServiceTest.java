@@ -117,6 +117,15 @@ public class UsersServiceTest extends ServiceTestBase {
     log.info(rr3.toString());
 
     Assert.assertNotNull(rr3);
+
+    redisTemplate.opsForHash().put("dtoRedisTemplateHash", "aa", redisDto1);
+    var rr4 = redisTemplate.opsForHash().get("dtoRedisTemplateHash", "aa");
+    log.info(rr4.toString());
+
+    var rMap = redissonClient.getMap("dtoRedisHash");
+    rMap.put("aa", redisDto1);
+    var rr5 = rMap.get("aa");
+    log.info(rr5.toString());
   }
 
   @Test

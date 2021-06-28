@@ -27,24 +27,24 @@ services:
     ports:
       - 6379:6379
 
-  #  nginx:
-  #    image: nginx:1.10
-  #    container_name: nginx
-  #    volumes:
-  #      - /mydata/nginx/conf:/etc/nginx #配置文件挂载
-  #      - /mydata/nginx/html:/usr/share/nginx/html #静态资源根目录挂载
-  #      - /mydata/nginx/log:/var/log/nginx #日志文件挂载
-  #    ports:
-  #      - 80:80
-  #  rabbitmq:
-  #    image: rabbitmq:3.7.15-management
-  #    container_name: rabbitmq
-  #    volumes:
-  #      - /mydata/rabbitmq/data:/var/lib/rabbitmq #数据文件挂载
-  #      - /mydata/rabbitmq/log:/var/log/rabbitmq #日志文件挂载
-  #    ports:
-  #      - 5672:5672
-  #      - 15672:15672
+      #  nginx:
+      #    image: nginx:1.10
+      #    container_name: nginx
+      #    volumes:
+      #      - /mydata/nginx/conf:/etc/nginx #配置文件挂载
+      #      - /mydata/nginx/html:/usr/share/nginx/html #静态资源根目录挂载
+      #      - /mydata/nginx/log:/var/log/nginx #日志文件挂载
+      #    ports:
+      - 80:80
+  rabbitmq:
+    image: rabbitmq:3.7.15-management
+    container_name: rabbitmq
+    volumes:
+      - /mydata/rabbitmq/data:/var/lib/rabbitmq #数据文件挂载
+      - /mydata/rabbitmq/log:/var/log/rabbitmq #日志文件挂载
+    ports:
+      - 5672:5672
+      - 15672:15672
   elasticsearch:
     image: elasticsearch:7.6.2
     container_name: elasticsearch

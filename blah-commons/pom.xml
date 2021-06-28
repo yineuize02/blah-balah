@@ -17,6 +17,7 @@
     <module>blah-common-config</module>
     <module>blah-common-pojo</module>
     <module>blah-common-redis</module>
+    <module>blah-common-rabbit</module>
 
   </modules>
 

@@ -117,6 +117,37 @@ public class UsersServiceTest extends ServiceTestBase {
     log.info(rr3.toString());
 
     Assert.assertNotNull(rr3);
+
+    redisTemplate.opsForHash().put("dtoRedisTemplateHash", "aa", redisDto1);
+    var rr4 = redisTemplate.opsForHash().get("dtoRedisTemplateHash", "aa");
+    log.info(rr4.toString());
+
+    var rMap = redissonClient.getMap("dtoRedisHash");
+    rMap.put("aa", redisDto1);
+    var rr5 = rMap.get("aa");
+    log.info(rr5.toString());
+  }
+
+  @Test
+  public void testCache() {
+    jdbcTemplate.execute("truncate table blah_user.users;");
+    var param = new UserAddParam();
+    param.setPassword("123456");
+    param.setUserName("222");
+
+    var u = usersService.addUser(param);
+    Assert.assertNotNull(u.getId());
+    var info = usersService.getUserInfoByName(param.getUserName());
+    Assert.assertNotNull(info);
+    jdbcTemplate.execute("truncate table blah_user.users;");
+
+    var infoCache = usersService.getUserInfoByName(param.getUserName());
+    Assert.assertNotNull(infoCache);
+    param.setUserName("333");
+    usersService.addUser(param);
+
+    infoCache = usersService.getUserInfoByName(param.getUserName());
+    Assert.assertNotNull(infoCache);
   }
 
   @Test
@@ -262,6 +293,8 @@ public class UsersServiceTest extends ServiceTestBase {
 
   @Test
   public void testSave() {
+    jdbcTemplate.execute("truncate table blah_user.users;");
+
     var param = new UserAddParam();
     param.setPassword("123456");
     param.setUserName("222");

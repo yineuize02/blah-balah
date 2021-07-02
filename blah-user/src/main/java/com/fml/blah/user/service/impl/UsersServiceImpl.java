@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,8 @@ public class UsersServiceImpl implements UsersService {
     return user;
   }
 
+  // 过期时间3600秒加随机0到100秒
+  @Cacheable("userinfo#3600#100")
   @Override
   public UserRolesDto getUserInfoByName(String userName) {
     var user =

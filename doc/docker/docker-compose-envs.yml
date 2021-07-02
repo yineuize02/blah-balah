@@ -129,3 +129,12 @@ services:
     depends_on:
       - elasticsearch
 
+  zookeeper:
+    image: zookeeper
+    container_name: zookeeper
+    ports:
+      - 2181:2181
+    volumes:
+      - /mydata/zookeeper/zoo1/data:/data
+      - /mydata/zookeeper/zoo1/datalog:/datalog
+

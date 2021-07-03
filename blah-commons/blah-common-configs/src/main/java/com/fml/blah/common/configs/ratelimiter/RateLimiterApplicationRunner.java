@@ -2,7 +2,6 @@ package com.fml.blah.common.configs.ratelimiter;
 
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.NacosServiceManager;
-import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.listener.NamingEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +44,7 @@ public class RateLimiterApplicationRunner implements ApplicationRunner {
           if (event instanceof NamingEvent) {
 
             log.info(((NamingEvent) event).getServiceName());
-
-            try {
-              var currentIns = namingService.getAllInstances(serviceName).size();
-              rateLimiterConfig.setInstanceCount(currentIns);
-            } catch (NacosException e) {
-              log.error(e.getMessage());
-            }
+            rateLimiterConfig.setInstanceCount(((NamingEvent) event).getInstances().size());
           }
         });
   }

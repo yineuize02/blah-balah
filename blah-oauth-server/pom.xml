@@ -17,7 +17,7 @@
     </dependency>
     <dependency>
       <groupId>com.fml</groupId>
-      <artifactId>blah-common-config</artifactId>
+      <artifactId>blah-common-configs</artifactId>
     </dependency>
 
     <dependency>

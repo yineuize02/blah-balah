@@ -40,10 +40,13 @@ public class RateLimitAspect {
     Limiting annotation = currentMethod.getAnnotation(Limiting.class);
     double rate =
         (double) annotation.limitNum() / rateLimiterConfig.getInstanceCount(); // 获取注解每秒加入桶中的token
+
+    if (rate < 1) {
+      rate = 1;
+    }
+
     String name =
         annotation.name().length() != 0 ? annotation.name() : msig.getName(); // 注解所在方法名区分不同的限流策略
-
-    boolean isBLock = annotation.block();
 
     RateLimiter rateLimiter = rateLimiterMap.get(name);
     synchronized (this) {
@@ -58,14 +61,12 @@ public class RateLimitAspect {
       }
     }
 
-    //    if (RATE_LIMITER.containsKey(name)) {
-    //      rateLimiter = RATE_LIMITER.get(name);
-    //    } else {
-    //      RATE_LIMITER.put(name, RateLimiter.create(limitNum));
-    //      rateLimiter = RATE_LIMITER.get(name);
-    //    }
+    if (annotation.block()) {
+      rateLimiter.acquire();
+      return point.proceed();
+    }
+
     if (rateLimiter.tryAcquire()) {
-      log.info("处理完成");
       return point.proceed();
     } else {
       throw new RuntimeException("服务器繁忙，请稍后再试。");

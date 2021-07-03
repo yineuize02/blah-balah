@@ -1,8 +1,8 @@
 package com.fml.blah.seckill.ratelimiter;
 
-import com.alibaba.nacos.api.annotation.NacosInjected;
+import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
+import com.alibaba.cloud.nacos.NacosServiceManager;
 import com.alibaba.nacos.api.exception.NacosException;
-import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.listener.NamingEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class RateLimiterApplicationRunner implements ApplicationRunner {
 
-  @NacosInjected private NamingService namingService;
-
+  @Autowired private NacosServiceManager nacosServiceManager;
+  @Autowired private NacosDiscoveryProperties nacosDiscoveryProperties;
   @Autowired private RateLimiterConfig rateLimiterConfig;
 
   @Value("${spring.application.name}")
@@ -24,7 +24,8 @@ public class RateLimiterApplicationRunner implements ApplicationRunner {
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
-
+    var namingService =
+        nacosServiceManager.getNamingService(nacosDiscoveryProperties.getNacosProperties());
     var instances = namingService.getAllInstances(serviceName);
     rateLimiterConfig.setInstanceCount(instances.size());
 

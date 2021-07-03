@@ -1,5 +1,5 @@
 server:
-  port: 8883
+  port: 8884
 spring:
   application:
     name: blah-seckill

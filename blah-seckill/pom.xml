@@ -15,14 +15,17 @@
     <dependency>
       <groupId>com.fml</groupId>
       <artifactId>blah-test</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-jdbc</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
+
     <dependency>
       <groupId>com.fml</groupId>
-      <artifactId>blah-common-config</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fml</groupId>
-      <artifactId>blah-common-redis</artifactId>
+      <artifactId>blah-common-configs</artifactId>
     </dependency>
 
     <dependency>

@@ -1,4 +1,4 @@
-package com.fml.blah.common.exception;
+package com.fml.blah.common.configs;
 
 import com.fml.blah.common.vo.WebResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;

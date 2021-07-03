@@ -1,4 +1,4 @@
-package com.fml.blah.seckill.ratelimiter;
+package com.fml.blah.common.configs.ratelimiter;
 
 import cn.hutool.core.util.NumberUtil;
 import com.google.common.util.concurrent.RateLimiter;
@@ -23,7 +23,7 @@ public class RateLimitAspect {
 
   private ConcurrentHashMap<String, RateLimiter> rateLimiterMap = new ConcurrentHashMap<>();
 
-  @Pointcut("@annotation(com.fml.blah.seckill.ratelimiter.Limiting)")
+  @Pointcut("@annotation(com.fml.blah.common.configs.ratelimiter.RateLimit)")
   public void serviceLimit() {}
 
   @Around("serviceLimit()")
@@ -37,7 +37,7 @@ public class RateLimitAspect {
     // 为了获取注解信息
     Method currentMethod = target.getClass().getMethod(msig.getName(), msig.getParameterTypes());
     // 获取注解信息
-    Limiting annotation = currentMethod.getAnnotation(Limiting.class);
+    RateLimit annotation = currentMethod.getAnnotation(RateLimit.class);
     double rate =
         (double) annotation.limitNum() / rateLimiterConfig.getInstanceCount(); // 获取注解每秒加入桶中的token
 

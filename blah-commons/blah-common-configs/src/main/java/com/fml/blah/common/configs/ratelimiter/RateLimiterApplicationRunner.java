@@ -1,4 +1,4 @@
-package com.fml.blah.seckill.ratelimiter;
+package com.fml.blah.common.configs.ratelimiter;
 
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.NacosServiceManager;
@@ -22,8 +22,18 @@ public class RateLimiterApplicationRunner implements ApplicationRunner {
   @Value("${spring.application.name}")
   private String serviceName;
 
+  @Value("${blah.ratelimiter.distribute.byNacos:true}")
+  private Boolean distributeByNacos;
+
+  @Value("${blah.ratelimiter.distribute.byZookeeper:false}")
+  private Boolean distributeByZookeeper;
+
   @Override
   public void run(ApplicationArguments args) throws Exception {
+    if (!distributeByNacos || distributeByZookeeper) {
+      return;
+    }
+
     var namingService =
         nacosServiceManager.getNamingService(nacosDiscoveryProperties.getNacosProperties());
     var instances = namingService.getAllInstances(serviceName);

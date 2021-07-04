@@ -130,7 +130,7 @@ services:
       - elasticsearch
 
   zookeeper:
-    image: zookeeper
+    image: zookeeper:3.5.9
     container_name: zookeeper
     ports:
       - 2181:2181

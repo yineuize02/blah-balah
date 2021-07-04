@@ -16,6 +16,10 @@
       <artifactId>blah-common-pojo</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-common-zookeeper</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
     </dependency>

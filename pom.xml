@@ -122,6 +122,20 @@
         <version>${project.version}</version>
       </dependency>
 
+      <!--  curator-framework要放在spring-cloud-dependencies前面  -->
+      <!--  否则curator-recipes依赖的curator-framework版本是spring-cloud-dependencies中spring-cloud-zookeeper-dependencies定义的版本   -->
+      <dependency>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-framework</artifactId>
+        <version>5.1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-recipes</artifactId>
+        <version>5.1.0</version>
+      </dependency>
+
+
       <!--Spring Cloud 相关依赖-->
       <dependency>
         <groupId>org.springframework.cloud</groupId>
@@ -241,16 +255,13 @@
         <version>${minio.version}</version>
       </dependency>
 
-      <dependency>
-        <groupId>org.apache.zookeeper</groupId>
-        <artifactId>zookeeper</artifactId>
-        <version>3.4.14</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.curator</groupId>
-        <artifactId>curator-recipes</artifactId>
-        <version>5.1.0</version>
-      </dependency>
+      <!--      <dependency>-->
+      <!--        <groupId>org.apache.zookeeper</groupId>-->
+      <!--        <artifactId>zookeeper</artifactId>-->
+      <!--        <version>3.4.14</version>-->
+      <!--      </dependency>-->
+
+
     </dependencies>
   </dependencyManagement>
 

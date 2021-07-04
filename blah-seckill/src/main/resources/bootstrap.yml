@@ -5,3 +5,16 @@ spring:
     name: blah-seckill
   profiles:
     active: dev,common
+
+curator:
+  retryCount: 5
+  elapsedTimeMs: 5000
+  connectString: 192.168.230.128:2181
+  sessionTimeoutMs: 60000
+  connectionTimeoutMs: 5000
+
+blah:
+  ratelimiter:
+    distribute:
+      byNacos: false
+      byZookeeper: true

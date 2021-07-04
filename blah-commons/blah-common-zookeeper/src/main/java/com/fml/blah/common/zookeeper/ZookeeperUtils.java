@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
+@Component("ZookeeperUtils")
 public class ZookeeperUtils {
   @Autowired CuratorFramework curatorFramework;
 

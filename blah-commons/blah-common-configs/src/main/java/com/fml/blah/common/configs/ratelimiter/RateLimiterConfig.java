@@ -8,7 +8,7 @@ public class RateLimiterConfig {
   private int instanceCount = 1;
 
   public void setInstanceCount(Integer instanceCount) {
-    if (instanceCount == null || instanceCount.equals(0)) {
+    if (instanceCount == null || instanceCount <= 0) {
       instanceCount = 1;
     }
 

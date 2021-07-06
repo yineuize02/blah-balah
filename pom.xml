@@ -25,9 +25,8 @@
     <module>mybatis-plus-generator</module>
     <module>blah-test</module>
     <module>blah-user-interface</module>
-    <module>blah-goods</module>
-    <module>blah-order</module>
     <module>blah-seckill</module>
+    <module>blah-store</module>
   </modules>
 
 

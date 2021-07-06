@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.fml.blah.common.configs.Configuration
+#com.fml.blah.common.configs.exception.BlahExceptionHandler

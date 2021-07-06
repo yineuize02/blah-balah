@@ -25,9 +25,8 @@
     <module>mybatis-plus-generator</module>
     <module>blah-test</module>
     <module>blah-user-interface</module>
-    <module>blah-goods</module>
-    <module>blah-order</module>
     <module>blah-seckill</module>
+    <module>blah-store</module>
   </modules>
 
 
@@ -54,10 +53,10 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>org.springframework.boot</groupId>-->
+    <!--      <artifactId>spring-boot-starter-actuator</artifactId>-->
+    <!--    </dependency>-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-aop</artifactId>
@@ -91,10 +90,14 @@
       </dependency>
       <dependency>
         <groupId>com.fml</groupId>
-        <artifactId>blah-common-config</artifactId>
+        <artifactId>blah-common-configs</artifactId>
         <version>${project.version}</version>
       </dependency>
-
+      <dependency>
+        <groupId>com.fml</groupId>
+        <artifactId>blah-common-zookeeper</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.fml</groupId>
         <artifactId>blah-common-redis</artifactId>
@@ -117,6 +120,20 @@
         <artifactId>blah-user-interface</artifactId>
         <version>${project.version}</version>
       </dependency>
+
+      <!--  curator-framework要放在spring-cloud-dependencies前面  -->
+      <!--  否则curator-recipes依赖的curator-framework版本是spring-cloud-dependencies中spring-cloud-zookeeper-dependencies定义的版本   -->
+      <dependency>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-framework</artifactId>
+        <version>5.1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-recipes</artifactId>
+        <version>5.1.0</version>
+      </dependency>
+
 
       <!--Spring Cloud 相关依赖-->
       <dependency>
@@ -236,6 +253,14 @@
         <artifactId>minio</artifactId>
         <version>${minio.version}</version>
       </dependency>
+
+      <!--      <dependency>-->
+      <!--        <groupId>org.apache.zookeeper</groupId>-->
+      <!--        <artifactId>zookeeper</artifactId>-->
+      <!--        <version>3.4.14</version>-->
+      <!--      </dependency>-->
+
+
     </dependencies>
   </dependencyManagement>
 

@@ -2,18 +2,19 @@ docker stop `docker ps -a | grep  8879 | awk '{print $1}'`
 docker stop `docker ps -a | grep  192.168.230.129:5001/blah-user:latest | awk '{print $1}'`
 docker rm `docker ps -a | grep  192.168.230.129:5001/blah-user:latest | awk '{print $1}'`
 docker volume rm `docker volume ls | grep local | awk '{print $2}'`
-
+----------
 导出
 mysqldump -h yourhostnameorIP -u root -p --no-data dbname > schema.sql
 mysqldump -h localhost -u root -proot --no-data blah_user > schema.sql
 docker exec mysql mysqldump -h localhost -u root -proot --no-data blah_user > blah_user_schema.sql
 docker exec mysql mysqldump -h localhost -u root -proot --no-data blah_auth > blah_auth_schema.sql
+docker exec mysql mysqldump -h localhost -u root -proot --no-data blah_store > blah_store.sql
 
 导入
 docker exec -i mysql /usr/bin/mysql -u root --password=root blah_user < blah_user_schema.sql
 docker exec -i mysql /usr/bin/mysql -u root --password=root blah_auth < blah_auth_schema.sql
 
-
+---------------------
 查看docker容器的内存占用
 docker stats --no-stream
 
@@ -24,6 +25,10 @@ top -p 5140
 pmap -d 5140
 ps -e -o 'pid,comm,args,pcpu,rsz,vsz,stime,user,uid' | grep 5140
 其中rsz为实际内存
-
+------------------------
 Bash script and /bin/bash^M: bad interpreter: No such file or directory
 sed -i -e 's/\r$//' scriptname.sh
+------------------------
+zookeeper cli:
+docker exec -it zookeeper /bin/bash
+bin/zkCli.sh

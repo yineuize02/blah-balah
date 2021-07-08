@@ -9,6 +9,7 @@ mysqldump -h localhost -u root -proot --no-data blah_user > schema.sql
 docker exec mysql mysqldump -h localhost -u root -proot --no-data blah_user > blah_user_schema.sql
 docker exec mysql mysqldump -h localhost -u root -proot --no-data blah_auth > blah_auth_schema.sql
 docker exec mysql mysqldump -h localhost -u root -proot --no-data blah_store > blah_store.sql
+docker exec mysql mysqldump -h localhost -u root -proot blah_store > blah_store.sql
 
 导入
 docker exec -i mysql /usr/bin/mysql -u root --password=root blah_user < blah_user_schema.sql

@@ -27,6 +27,7 @@
     <module>blah-user-interface</module>
     <module>blah-seckill</module>
     <module>blah-store</module>
+    <module>blah-store-interface</module>
   </modules>
 
 

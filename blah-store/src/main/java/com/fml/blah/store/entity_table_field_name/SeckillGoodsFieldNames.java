@@ -2,7 +2,7 @@ package com.fml.blah.store.entity_table_field_name;
 
 /**
  * @author y
- * @since 2021-07-06
+ * @since 2021-07-07
  */
 public interface SeckillGoodsFieldNames {
   /** */
@@ -13,6 +13,10 @@ public interface SeckillGoodsFieldNames {
   String stock = "stock";
   /** 价格 */
   String price = "price";
+  /** */
+  String startTime = "start_time";
+  /** */
+  String endTime = "end_time";
   /** */
   String createdAt = "created_at";
   /** */

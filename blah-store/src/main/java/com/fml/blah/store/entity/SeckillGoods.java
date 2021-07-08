@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @author y
- * @since 2021-07-06
+ * @since 2021-07-07
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -29,6 +29,10 @@ public class SeckillGoods implements Serializable {
 
   /** 价格 */
   private BigDecimal price;
+
+  private LocalDateTime startTime;
+
+  private LocalDateTime endTime;
 
   private LocalDateTime createdAt;
 

@@ -18,7 +18,7 @@ public class PreheatService {
   @Autowired private RedissonClient redissonClient;
 
   /**
-   * 库存预热
+   * 库存预热 活动开始前调用
    *
    * @param startTime
    * @param endTime
@@ -29,12 +29,17 @@ public class PreheatService {
             .map(WebResponse::getData)
             .orElseThrow();
     var batch = redissonClient.createBatch();
+    var fullStockBatch = redissonClient.createBatch();
     for (var goods : list) {
       var buk = batch.getBucket(RedisPrefix.SECKILL_STOCK + goods.getId());
       buk.setAsync(goods.getStock());
+
+      var fullBuk = batch.getBucket(RedisPrefix.SECKILL_FULL_STOCK + goods.getId());
+      fullBuk.setAsync(goods.getStock());
     }
 
     var result = batch.execute();
+    fullStockBatch.execute();
     return result.toString();
   }
 }

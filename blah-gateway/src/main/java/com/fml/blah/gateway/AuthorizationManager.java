@@ -81,7 +81,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
             .any(authorities::contains)
             .map(AuthorizationDecision::new)
             .defaultIfEmpty(new AuthorizationDecision(false));
+
     return authorizationDecisionMono;
-    //  return Mono.just(new AuthorizationDecision(true));
   }
 }

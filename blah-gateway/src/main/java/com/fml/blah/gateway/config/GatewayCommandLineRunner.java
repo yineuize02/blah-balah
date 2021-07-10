@@ -17,7 +17,7 @@ public class GatewayCommandLineRunner implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     Map<String, List<String>> resourceRolesMap = new TreeMap<>();
-    resourceRolesMap.put("GET_/blah-api/hello", CollUtil.toList("ADMIN"));
+    resourceRolesMap.put("GET_/blah-api/hello/{id}", CollUtil.toList("ADMIN"));
     resourceRolesMap.put("GET_/blah-api/user/currentUser", CollUtil.toList("ADMIN", "TEST"));
     redisTemplate.opsForHash().putAll(RedisConstants.RESOURCE_ROLES_MAP, resourceRolesMap);
   }

@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface SeckillGoodsExtendsMapper {
 
-  List<SeckillGoods> selectForUpdate(@Param("id") Integer id);
+  List<SeckillGoods> selectForUpdate(@Param("id") Long id);
 
-  Integer reduceStock(@Param("id") Integer id);
+  Integer reduceStock(@Param("id") Long id);
 }

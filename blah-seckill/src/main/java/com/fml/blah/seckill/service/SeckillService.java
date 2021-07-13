@@ -76,13 +76,12 @@ public class SeckillService {
       seckillGoodsFullStockMap.put(seckillGoodsId, fullStock);
     }
 
-    double rate = (double) fullStock / rateLimiterConfig.getInstanceCount();
-
     RateLimiter rateLimiter = seckillGoodsRateLimiterMap.get(seckillGoodsId);
     if (rateLimiter == null) {
       synchronized (this) {
         rateLimiter = seckillGoodsRateLimiterMap.get(seckillGoodsId);
         if (rateLimiter == null) {
+          double rate = (double) fullStock / rateLimiterConfig.getInstanceCount();
           rateLimiter = rateLimiter.create(rate);
           seckillGoodsRateLimiterMap.put(seckillGoodsId, rateLimiter);
         }
@@ -90,6 +89,7 @@ public class SeckillService {
     }
 
     synchronized (this) {
+      double rate = (double) fullStock / rateLimiterConfig.getInstanceCount();
       var oldRate = rateLimiter.getRate();
       if (NumberUtil.compare(rate, oldRate) != 0) {
         rateLimiter.setRate(rate);

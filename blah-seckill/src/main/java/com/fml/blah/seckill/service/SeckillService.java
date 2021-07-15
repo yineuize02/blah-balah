@@ -4,6 +4,7 @@ import cn.hutool.core.util.NumberUtil;
 import com.fml.blah.common.configs.ratelimiter.RateLimiterConfig;
 import com.fml.blah.common.exception.ServerErrorException;
 import com.fml.blah.common.redis.RedisUtils;
+import com.fml.blah.seckill.config.LuaConfig;
 import com.fml.blah.seckill.constants.RedisPrefix;
 import com.fml.blah.seckill.rabbit.SeckillSender;
 import com.fml.blah.seckill.rabbit.message.SeckillMessage;
@@ -12,7 +13,11 @@ import java.time.LocalDateTime;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RScript;
+import org.redisson.api.RScript.Mode;
+import org.redisson.api.RScript.ReturnType;
 import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +34,7 @@ public class SeckillService {
   @Autowired private RedisUtils redisUtils;
   @Autowired private RedissonClient redissonClient;
   @Autowired private SeckillSender seckillSender;
+  @Autowired private LuaConfig luaConfig;
 
   public boolean doSeckill(Long seckillGoodsId, Long userId) {
     var acquireRateLimit = tryAcquireRateLimit(seckillGoodsId);
@@ -46,8 +52,18 @@ public class SeckillService {
     }
 
     userLock.unlockAsync();
-    var decr = redisUtils.decr(RedisPrefix.SECKILL_STOCK + seckillGoodsId, 1);
-    if (decr < 0) {
+
+    RScript decrScript = redissonClient.getScript(StringCodec.INSTANCE);
+    String evalResult =
+        decrScript.eval(Mode.READ_WRITE, luaConfig.getPreDecrLua(), ReturnType.INTEGER);
+    Integer decrResult = 0;
+    try {
+      decrResult = Integer.parseInt(evalResult);
+    } catch (Exception e) {
+      log.info("Integer.parseInt(evalResult) " + e.getMessage());
+    }
+
+    if (decrResult <= 0) {
       return false;
     }
 

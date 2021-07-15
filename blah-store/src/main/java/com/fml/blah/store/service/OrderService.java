@@ -2,6 +2,7 @@ package com.fml.blah.store.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.fml.blah.store.entity.Order;
+import com.fml.blah.store.rabbit.sender.CancelOrderSender;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
 
   @Autowired private IOrderMbpService orderMbpService;
-  // @Autowired private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+  @Autowired private CancelOrderSender cancelOrderSender;
 
   @Builder
   @NoArgsConstructor
@@ -43,5 +44,7 @@ public class OrderService {
               "orderMbpService.save(order) fail goodsId %d userId %d",
               payload.getGoodsId(), payload.getUserId()));
     }
+
+    cancelOrderSender.sendCancelOrderDelay(order.getId(), 1000 * 60 * 2L);
   }
 }

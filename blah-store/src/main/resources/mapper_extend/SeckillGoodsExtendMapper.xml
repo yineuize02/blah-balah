@@ -4,16 +4,10 @@
 <mapper namespace="com.fml.blah.store.mapper_extend.SeckillGoodsExtendsMapper">
   <update id="reduceStock">
     update blah_store.seckill_goods
-    set stock = stock - 1
+    set stock = stock - #{num}
     where id = #{id}
+      and stock >= #{num}
   </update>
 
-  <select id="selectForUpdate" resultType="com.fml.blah.store.entity.SeckillGoods">
-    SELECT *
-    FROM blah_store.seckill_goods
-    WHERE id = #{id}
-      for
-    update
-  </select>
 
 </mapper>

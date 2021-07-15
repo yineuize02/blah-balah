@@ -7,5 +7,6 @@ import lombok.Data;
 public class SeckillMessage {
   private Long userId;
   private Long seckillGoodsId;
+  private Integer count;
   private LocalDateTime createTime;
 }

@@ -12,21 +12,24 @@ public class SeckillGoodsService {
 
   @Autowired private SeckillGoodsExtendsMapper seckillGoodsExtendsMapper;
 
+  @Autowired private ISeckillGoodsMbpService seckillGoodsMbpService;
   @Autowired private OrderService orderService;
 
   @Transactional
   public void onSeckill(SeckillMessage msg) {
     var seckillGoodsId = msg.getSeckillGoodsId();
-    var list = seckillGoodsExtendsMapper.selectForUpdate(seckillGoodsId);
-    if (list.size() == 0) {
-      throw new RuntimeException("goods.size() == 0 seckillGoodsId");
+
+    var result = seckillGoodsExtendsMapper.reduceStock(seckillGoodsId, msg.getCount());
+    if (result <= 0) {
+      throw new RuntimeException(
+          String.format("reduceStock %d %d result %d", seckillGoodsId, msg.getCount(), result));
     }
 
-    var goods = list.get(0);
-    seckillGoodsExtendsMapper.reduceStock(seckillGoodsId);
+    var goods = seckillGoodsMbpService.getById(seckillGoodsId);
+
     var payload =
         OrderCreatePayload.builder()
-            .count(1)
+            .count(msg.getCount())
             .goodsId(goods.getGoodsId())
             .createTime(msg.getCreateTime())
             .price(goods.getPrice())

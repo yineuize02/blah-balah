@@ -7,6 +7,7 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -30,5 +31,10 @@ public class CancelOrderSender {
           }
         });
     log.info("send delay message orderId:{}", orderId);
+  }
+
+  @Async
+  public void sendCancelOrderDelay(Long orderId, Long delay) {
+    sendMessage(orderId, delay);
   }
 }

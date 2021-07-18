@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * 服务实现类
  *
  * @author y
- * @since 2021-07-06
+ * @since 2021-07-18
  */
 @Service
 public class SeckillGoodsMbpServiceImpl extends ServiceImpl<SeckillGoodsMapper, SeckillGoods>

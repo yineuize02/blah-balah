@@ -7,6 +7,6 @@ import com.fml.blah.store.entity.SeckillGoods;
  * Mapper 接口
  *
  * @author y
- * @since 2021-07-06
+ * @since 2021-07-18
  */
 public interface SeckillGoodsMapper extends BaseMapper<SeckillGoods> {}

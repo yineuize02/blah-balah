@@ -1,12 +1,12 @@
 package com.fml.blah.store.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.fml.blah.store.entity.Order;
+import com.fml.blah.store.entity.ShopOrder;
 
 /**
  * 服务类
  *
  * @author y
- * @since 2021-07-06
+ * @since 2021-07-18
  */
-public interface IOrderMbpService extends IService<Order> {}
+public interface IShopOrderMbpService extends IService<ShopOrder> {}

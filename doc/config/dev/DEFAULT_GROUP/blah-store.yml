@@ -1,9 +1,10 @@
 ##
 spring:
-  redis:
-    database: 0
-    host: 192.168.230.128
-    port: 6379
+  datasource:
+    url: jdbc:mysql://192.168.230.128:3306/blah_store?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   rabbitmq:
     host: 192.168.230.128

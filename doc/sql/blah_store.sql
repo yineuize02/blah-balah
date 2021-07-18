@@ -51,43 +51,6 @@ VALUES (1, 'aa', '2021-07-07 22:19:04', NULL),
 UNLOCK TABLES;
 
 --
--- Table structure for table `order`
---
-
-DROP TABLE IF EXISTS `order`;
-/*!40101 SET @saved_cs_client = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `order`
-(
-    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
-    `goods_id`    bigint(20) NOT NULL COMMENT '商品id',
-    `user_id`     bigint(20) NOT NULL,
-    `delete_time` datetime       DEFAULT NULL,
-    `create_time` datetime       DEFAULT NULL,
-    `pay_time`    datetime       DEFAULT NULL,
-    `count`       int(11)        DEFAULT NULL,
-    `price`       decimal(10, 2) DEFAULT NULL,
-    `created_at`  datetime       DEFAULT CURRENT_TIMESTAMP,
-    `updated_at`  datetime       DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-    `deleted`     tinyint(1)     DEFAULT NULL,
-    PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `order`
---
-
-LOCK TABLES `order` WRITE;
-/*!40000 ALTER TABLE `order`
-    DISABLE KEYS */;
-/*!40000 ALTER TABLE `order`
-    ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `seckill_goods`
 --
 
@@ -128,6 +91,43 @@ VALUES (1, 1, 1000, 1.01, '2021-07-07 22:29:34', '2021-07-09 22:29:52', '2021-07
 /*!40000 ALTER TABLE `seckill_goods`
     ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_order`
+--
+
+DROP TABLE IF EXISTS `shop_order`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `shop_order`
+(
+    `id`          bigint(20) NOT NULL AUTO_INCREMENT,
+    `goods_id`    bigint(20) NOT NULL COMMENT '商品id',
+    `user_id`     bigint(20) NOT NULL,
+    `delete_time` datetime       DEFAULT NULL,
+    `create_time` datetime       DEFAULT NULL,
+    `pay_time`    datetime       DEFAULT NULL,
+    `count`       int(11)        DEFAULT NULL,
+    `price`       decimal(10, 2) DEFAULT NULL,
+    `created_at`  datetime       DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`  datetime       DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    `deleted`     tinyint(1)     DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_order`
+--
+
+LOCK TABLES `shop_order` WRITE;
+/*!40000 ALTER TABLE `shop_order`
+    DISABLE KEYS */;
+/*!40000 ALTER TABLE `shop_order`
+    ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE = @OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE = @OLD_SQL_MODE */;
@@ -138,4 +138,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-07 22:32:00
+-- Dump completed on 2021-07-18 14:47:10

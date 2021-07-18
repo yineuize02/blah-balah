@@ -2,7 +2,7 @@ package com.fml.blah.store.entity_table_field_name;
 
 /**
  * @author y
- * @since 2021-07-07
+ * @since 2021-07-18
  */
 public interface SeckillGoodsFieldNames {
   /** */

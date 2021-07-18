@@ -26,10 +26,15 @@ public class QueuesConfig {
   }
 
   @Bean
-  public Binding orderDelayCancelBinding(CustomExchange orderPluginDirect, Queue orderPluginQueue) {
-    return BindingBuilder.bind(orderPluginQueue)
-        .to(orderPluginDirect)
+  public Binding orderDelayCancelBinding() {
+    return BindingBuilder.bind(orderDelayCancelQueue())
+        .to(orderDelayCancelExchange())
         .with(QueueConstants.ORDER_DELAY_CANCEL)
         .noargs();
+  }
+
+  @Bean
+  public Queue seckillQueue() {
+    return new Queue(QueueConstants.SECKILL_QUEUE);
   }
 }

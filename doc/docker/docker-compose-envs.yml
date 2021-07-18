@@ -43,7 +43,8 @@ services:
       - /mydata/rabbitmq/data:/var/lib/rabbitmq #数据文件挂载
       - /mydata/rabbitmq/log:/var/log/rabbitmq #日志文件挂载
     environment:
-      RABBIT_PLUGINS_ENABLE: rabbitmq_delayed_message_exchange
+      # RABBIT_PLUGINS_ENABLE: 'rabbitmq_delayed_message_exchange'
+      - "RABBIT_PLUGINS_ENABLE='rabbitmq_delayed_message_exchange'"
     ports:
       - 5672:5672
       - 15672:15672
@@ -132,7 +133,7 @@ services:
       - elasticsearch
 
   zookeeper:
-    image: zookeeper:3.5.9
+    image: zookeeper:3.6.3
     container_name: zookeeper
     ports:
       - 2181:2181

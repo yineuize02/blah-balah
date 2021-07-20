@@ -82,6 +82,7 @@ public class SeckillService {
 
   public boolean tryAcquireRateLimit(Long seckillGoodsId) {
     var fullStock = seckillGoodsFullStockMap.get(seckillGoodsId);
+
     if (fullStock == null) {
 
       fullStock = (Integer) redisUtils.get(RedisPrefix.SECKILL_FULL_STOCK + seckillGoodsId);
@@ -92,25 +93,27 @@ public class SeckillService {
       seckillGoodsFullStockMap.put(seckillGoodsId, fullStock);
     }
 
-    RateLimiter rateLimiter = seckillGoodsRateLimiterMap.get(seckillGoodsId);
-    if (rateLimiter == null) {
-      synchronized (this) {
-        rateLimiter = seckillGoodsRateLimiterMap.get(seckillGoodsId);
-        if (rateLimiter == null) {
-          double rate = (double) fullStock / rateLimiterConfig.getInstanceCount();
-          rateLimiter = rateLimiter.create(rate);
-          seckillGoodsRateLimiterMap.put(seckillGoodsId, rateLimiter);
-        }
-      }
-    }
+    Integer finalFullStock = fullStock;
 
-    synchronized (this) {
-      double rate = (double) fullStock / rateLimiterConfig.getInstanceCount();
-      var oldRate = rateLimiter.getRate();
-      if (NumberUtil.compare(rate, oldRate) != 0) {
-        rateLimiter.setRate(rate);
-      }
-    }
+    seckillGoodsRateLimiterMap.computeIfAbsent(
+        seckillGoodsId,
+        key -> {
+          double rate = (double) finalFullStock / rateLimiterConfig.getInstanceCount();
+          return RateLimiter.create(rate);
+        });
+
+    var rateLimiter =
+        seckillGoodsRateLimiterMap.computeIfPresent(
+            seckillGoodsId,
+            (key, value) -> {
+              double rate = (double) finalFullStock / rateLimiterConfig.getInstanceCount();
+              var oldRate = value.getRate();
+              if (NumberUtil.compare(rate, oldRate) != 0) {
+                value.setRate(rate);
+              }
+
+              return value;
+            });
 
     return rateLimiter.tryAcquire();
   }

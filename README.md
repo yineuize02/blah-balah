@@ -7,3 +7,4 @@
 |     blah-oauth    |    8882     |
 |     blah-user    |    8879     |
 |     blah-seckill    |    8883     |
+|     blah-store    |    8885     |

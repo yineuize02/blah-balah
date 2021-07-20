@@ -35,13 +35,15 @@ services:
       #      - /mydata/nginx/html:/usr/share/nginx/html #静态资源根目录挂载
       #      - /mydata/nginx/log:/var/log/nginx #日志文件挂载
       #    ports:
-      - 80:80
+      #     - 80:80
   rabbitmq:
-    image: rabbitmq:3.7.15-management
+    image: riftbit/rabbitmq:3.8
     container_name: rabbitmq
     volumes:
       - /mydata/rabbitmq/data:/var/lib/rabbitmq #数据文件挂载
       - /mydata/rabbitmq/log:/var/log/rabbitmq #日志文件挂载
+    environment:
+      RABBITMQ_PLUGINS_ENABLE: 'rabbitmq_delayed_message_exchange'
     ports:
       - 5672:5672
       - 15672:15672
@@ -130,7 +132,7 @@ services:
       - elasticsearch
 
   zookeeper:
-    image: zookeeper:3.5.9
+    image: zookeeper:3.6.3
     container_name: zookeeper
     ports:
       - 2181:2181

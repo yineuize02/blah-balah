@@ -1,0 +1,7 @@
+server:
+  port: 8885
+spring:
+  application:
+    name: blah-store
+  profiles:
+    active: dev,common

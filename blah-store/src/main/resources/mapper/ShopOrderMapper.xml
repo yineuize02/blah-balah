@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fml.blah.blah-store.mapper.OrderMapper">
+<mapper namespace="com.fml.blah.store.mapper.ShopOrderMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.fml.blah.blah-store.entity.Order">
+    <resultMap id="BaseResultMap" type="com.fml.blah.store.entity.ShopOrder">
         <id column="id" property="id" />
         <result column="goods_id" property="goodsId" />
         <result column="user_id" property="userId" />

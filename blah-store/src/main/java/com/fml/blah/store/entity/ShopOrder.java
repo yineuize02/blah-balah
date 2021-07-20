@@ -10,11 +10,11 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @author y
- * @since 2021-07-06
+ * @since 2021-07-18
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Order implements Serializable {
+public class ShopOrder implements Serializable {
 
   private static final long serialVersionUID = 1L;
 

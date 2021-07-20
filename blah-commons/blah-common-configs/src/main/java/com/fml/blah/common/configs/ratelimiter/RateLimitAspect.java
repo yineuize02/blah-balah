@@ -38,28 +38,28 @@ public class RateLimitAspect {
     Method currentMethod = target.getClass().getMethod(msig.getName(), msig.getParameterTypes());
     // 获取注解信息
     RateLimit annotation = currentMethod.getAnnotation(RateLimit.class);
-    double rate =
-        (double) annotation.limitNum() / rateLimiterConfig.getInstanceCount(); // 获取注解每秒加入桶中的token
-
-    if (rate < 1) {
-      rate = 1;
-    }
 
     String name =
         annotation.name().length() != 0 ? annotation.name() : msig.getName(); // 注解所在方法名区分不同的限流策略
 
-    RateLimiter rateLimiter = rateLimiterMap.get(name);
-    synchronized (this) {
-      if (rateLimiter == null) {
-        rateLimiter = rateLimiter.create(rate);
-        rateLimiterMap.put(name, rateLimiter);
-      }
+    rateLimiterMap.computeIfAbsent(
+        name,
+        key -> {
+          var rate = calRate(annotation);
+          return RateLimiter.create(rate);
+        });
 
-      var oldRate = rateLimiter.getRate();
-      if (NumberUtil.compare(rate, oldRate) != 0) {
-        rateLimiter.setRate(rate);
-      }
-    }
+    var rateLimiter =
+        rateLimiterMap.computeIfPresent(
+            name,
+            (key, value) -> {
+              var rate = calRate(annotation);
+              var oldRate = value.getRate();
+              if (NumberUtil.compare(rate, oldRate) != 0) {
+                value.setRate(rate);
+              }
+              return value;
+            });
 
     if (annotation.block()) {
       rateLimiter.acquire();
@@ -71,5 +71,16 @@ public class RateLimitAspect {
     } else {
       throw new RuntimeException("服务器繁忙，请稍后再试。");
     }
+  }
+
+  private double calRate(RateLimit annotation) {
+    double rate =
+        (double) annotation.limitNum() / rateLimiterConfig.getInstanceCount(); // 获取注解每秒加入桶中的token
+
+    if (rate < 1) {
+      rate = 1;
+    }
+
+    return rate;
   }
 }

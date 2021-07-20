@@ -7,6 +7,6 @@ import com.fml.blah.store.entity.SeckillGoods;
  * 服务类
  *
  * @author y
- * @since 2021-07-06
+ * @since 2021-07-18
  */
 public interface ISeckillGoodsMbpService extends IService<SeckillGoods> {}

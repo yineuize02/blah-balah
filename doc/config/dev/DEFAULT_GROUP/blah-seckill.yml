@@ -1,1 +1,16 @@
 ##
+spring:
+  redis:
+    database: 0
+    host: 192.168.230.128
+    port: 6379
+
+  rabbitmq:
+    host: 192.168.230.128
+    port: 5672
+    username: guest
+    password: guest
+    #确认消息已发送到交换机(Exchange)
+    publisher-confirm-type: correlated
+    #确认消息已发送到队列(Queue)
+    publisher-returns: true

@@ -29,6 +29,26 @@
     </dependency>
 
     <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-store-interface</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-user-interface</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-common-redis</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-common-rabbit</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>

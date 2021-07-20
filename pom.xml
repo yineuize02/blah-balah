@@ -27,6 +27,7 @@
     <module>blah-user-interface</module>
     <module>blah-seckill</module>
     <module>blah-store</module>
+    <module>blah-store-interface</module>
   </modules>
 
 
@@ -118,6 +119,12 @@
       <dependency>
         <groupId>com.fml</groupId>
         <artifactId>blah-user-interface</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fml</groupId>
+        <artifactId>blah-store-interface</artifactId>
         <version>${project.version}</version>
       </dependency>
 

@@ -16,32 +16,54 @@
     <docker.repository>192.168.230.129:5001</docker.repository>
   </properties>
 
-<dependencies>
-  <dependency>
-    <groupId>com.fml</groupId>
-    <artifactId>blah-test</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>com.fml</groupId>
-    <artifactId>blah-common-configs</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>com.baomidou</groupId>
-    <artifactId>mybatis-plus-boot-starter</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-web</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-jdbc</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-validation</artifactId>
-  </dependency>
-</dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-test</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-jdbc</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-common-configs</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-common-rabbit</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-common-pojo</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <!--  <dependency>-->
+    <!--    <groupId>org.springframework.boot</groupId>-->
+    <!--    <artifactId>spring-boot-starter-jdbc</artifactId>-->
+    <!--  </dependency>-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+  </dependencies>
   <build>
     <plugins>
       <plugin>

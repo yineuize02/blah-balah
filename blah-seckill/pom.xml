@@ -52,6 +52,13 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>nimbus-jose-jwt</artifactId>
+      <scope>compile</scope>
+      <version>8.21</version>
+    </dependency>
   </dependencies>
 
 </project>

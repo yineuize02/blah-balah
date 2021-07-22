@@ -32,6 +32,12 @@ spring:
             - Path=/blah-oauth/**
           filters:
             - StripPrefix=1
+        - id: blah-seckill
+          uri: lb://blah-seckill
+          predicates:
+            - Path=/blah-seckill/**
+          filters:
+            - StripPrefix=1
 blah:
   whitelist:
     urls:

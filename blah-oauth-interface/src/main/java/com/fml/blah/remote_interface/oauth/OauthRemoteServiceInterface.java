@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @FeignClient(value = "blah-oauth", fallback = OauthRemoteServiceFallBack.class)
 public interface OauthRemoteServiceInterface {
-  @GetMapping("/rsa/getPublicKey")
+  @GetMapping("/oauth/rsa/getPublicKey")
   Map<String, Object> getKey();
 }

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+  <!--引用默认日志配置-->
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <!--使用默认的控制台日志输出实现-->
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+  <!--应用名称-->
+  <springProperty scope="context" name="APP_NAME" source="spring.application.name"
+    defaultValue="springBoot"/>
+  <!--日志文件保存路径-->
+  <property name="LOG_FILE_PATH"
+    value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/logs}"/>
+  <!--LogStash访问host-->
+  <springProperty name="LOG_STASH_HOST" scope="context" source="logstash.host"
+    defaultValue="localhost"/>
+
+  <springProperty name="ServerIP" scope="context" source="spring.cloud.client.ip-address"
+    defaultValue="0.0.0.0"/>
+  <springProperty name="ServerPort" scope="context" source="server.port" defaultValue="0000"/>
+  <property name="CONSOLE_LOG_PATTERN"
+    value="[${APP_NAME}:${ServerIP}:${ServerPort}] [%X{traceId},%X{X-B3-TraceId}] %d{yyyy-MM-dd HH:mm:ss.SSS} %level ${PID} [%thread] %logger %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+
+  <appender name="FILE_INFO"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>INFO</level>
+    </filter>
+    <encoder>
+      <!--设置为默认的文件日志格式-->
+      <pattern>${FILE_LOG_PATTERN}</pattern>
+      <charset>UTF-8</charset>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <!--设置文件命名格式-->
+      <fileNamePattern>${LOG_FILE_PATH}/debug/${APP_NAME}-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+      <!--设置日志文件大小，超过就重新生成文件，默认10M-->
+      <maxFileSize>${LOG_FILE_MAX_SIZE:-10MB}</maxFileSize>
+      <!--日志文件保留天数，默认30天-->
+      <maxHistory>${LOG_FILE_MAX_HISTORY:-30}</maxHistory>
+    </rollingPolicy>
+  </appender>
+
+
+  <appender name="LOG_STASH_INFO"
+    class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+    <destination>${LOG_STASH_HOST}:4560</destination>
+    <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+      <providers>
+        <timestamp>
+          <timeZone>Asia/Shanghai</timeZone>
+        </timestamp>
+        <!--自定义日志输出格式-->
+        <pattern>
+          <pattern>
+            {
+            "level": "%level",
+            "service": "${APP_NAME:-}",
+            "addr": "${ServerIP:-}:${ServerPort}",
+            "pid": "${PID:-}",
+            "thread": "%thread",
+            "message": "%message",
+            "stack_trace": "%exception{20}"
+            }
+          </pattern>
+        </pattern>
+      </providers>
+    </encoder>
+    <!--当有多个LogStash服务时，设置访问策略为轮询-->
+    <connectionStrategy>
+      <roundRobin>
+        <connectionTTL>5 minutes</connectionTTL>
+      </roundRobin>
+    </connectionStrategy>
+  </appender>
+
+
+  <!--控制框架输出日志-->
+  <logger name="org.slf4j" level="INFO"/>
+  <logger name="springfox" level="INFO"/>
+  <logger name="io.swagger" level="INFO"/>
+  <logger name="org.springframework" level="INFO"/>
+  <logger name="org.hibernate.validator" level="INFO"/>
+  <logger name="com.alibaba.nacos.client.naming" level="INFO"/>
+
+  <root level="DEBUG">
+    <appender-ref ref="CONSOLE"/>
+    <!--    <appender-ref ref="FILE_INFO"/>-->
+    <!--    <appender-ref ref="LOG_STASH_INFO"/>-->
+  </root>
+
+
+</configuration>

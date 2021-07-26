@@ -1,6 +1,8 @@
 package com.fml.blah.seckill.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fml.blah.common.dto.UserDetailDto;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSObject;
@@ -11,14 +13,23 @@ import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+@Slf4j
 @Component
 public class IdentifyInterceptor implements HandlerInterceptor {
+
+  private static ObjectMapper objectMapper = new ObjectMapper();
+
+  static {
+    objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+  }
 
   @Autowired private SeckillConfig seckillConfig;
 
@@ -42,7 +53,7 @@ public class IdentifyInterceptor implements HandlerInterceptor {
 
     JWSObject jwsObject = JWSObject.parse(realToken);
     String userStr = jwsObject.getPayload().toString();
-    ObjectMapper objectMapper = new ObjectMapper();
+
     var userDetail = objectMapper.readValue(userStr, UserDetailDto.class);
     UserContext.setUser(userDetail);
     return true;
@@ -66,7 +77,9 @@ public class IdentifyInterceptor implements HandlerInterceptor {
       HttpServletResponse response,
       Object handler,
       @Nullable ModelAndView modelAndView)
-      throws Exception {}
+      throws Exception {
+    log.info("postHandle");
+  }
 
   @Override
   public void afterCompletion(
@@ -74,5 +87,7 @@ public class IdentifyInterceptor implements HandlerInterceptor {
       HttpServletResponse response,
       Object handler,
       @Nullable Exception ex)
-      throws Exception {}
+      throws Exception {
+    UserContext.clear();
+  }
 }

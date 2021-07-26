@@ -35,7 +35,7 @@ public class SeckillApplicationRunner implements ApplicationRunner {
   }
 
   private void setJwk() {
-    var jwkSetMap = oauthRemoteService.getKey().toString();
+    var jwkSetMap = oauthRemoteService.getKey();
     ObjectMapper objectMapper = new ObjectMapper();
     String jwkStr = null;
     try {

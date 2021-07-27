@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.fml.blah.remote_interface.user.Configuration,\
+com.fml.blah.feign_interceptor.FeignTokenInterceptor

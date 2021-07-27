@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableFeignClients({"com.fml.blah.remote_interface", "com.fml.blah.feign_interceptor"})
 @EnableDiscoveryClient
-@SpringBootApplication(scanBasePackages = {"com.fml.blah.api", "com.fml.blah.feign_interceptor"})
+@SpringBootApplication
 public class BlahApiApplication {
   public static void main(String[] args) {
     SpringApplication.run(BlahApiApplication.class, args);

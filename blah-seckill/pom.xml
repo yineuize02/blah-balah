@@ -15,6 +15,7 @@
     <dependency>
       <groupId>com.fml</groupId>
       <artifactId>blah-test</artifactId>
+      <scope>test</scope>
       <exclusions>
         <exclusion>
           <groupId>org.springframework.boot</groupId>
@@ -26,6 +27,11 @@
     <dependency>
       <groupId>com.fml</groupId>
       <artifactId>blah-common-configs</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-common-auth</artifactId>
     </dependency>
 
     <dependency>
@@ -43,10 +49,6 @@
       <artifactId>blah-common-redis</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>com.fml</groupId>
-      <artifactId>blah-oauth-interface</artifactId>
-    </dependency>
 
     <dependency>
       <groupId>com.fml</groupId>

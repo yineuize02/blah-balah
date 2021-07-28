@@ -1,8 +1,8 @@
 package com.fml.blah.seckill.controller;
 
+import com.fml.blah.common.auth.UserContext;
 import com.fml.blah.common.configs.ratelimiter.RateLimit;
 import com.fml.blah.common.vo.WebResponse;
-import com.fml.blah.seckill.config.UserContext;
 import java.time.LocalDateTime;
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;

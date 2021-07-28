@@ -9,8 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients({"com.fml.blah.remote_interface", "com.fml.blah.feign_interceptor"})
 @EnableZookeeper
 @EnableDiscoveryClient
-@SpringBootApplication // (scanBasePackages = {"com.fml.blah.seckill",
-                       // "com.fml.blah.remote_interface"})
+@SpringBootApplication
 public class BlahSecKillApplication {
 
   public static void main(String[] args) {

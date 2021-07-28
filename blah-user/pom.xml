@@ -22,6 +22,7 @@
     <dependency>
       <groupId>com.fml</groupId>
       <artifactId>blah-test</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.fml</groupId>

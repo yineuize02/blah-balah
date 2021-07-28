@@ -55,10 +55,7 @@
   </properties>
 
   <dependencies>
-    <!--    <dependency>-->
-    <!--      <groupId>org.springframework.boot</groupId>-->
-    <!--      <artifactId>spring-boot-starter-actuator</artifactId>-->
-    <!--    </dependency>-->
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-aop</artifactId>
@@ -109,6 +106,12 @@
       <dependency>
         <groupId>com.fml</groupId>
         <artifactId>blah-common-rabbit</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fml</groupId>
+        <artifactId>blah-common-auth</artifactId>
         <version>${project.version}</version>
       </dependency>
 
@@ -192,25 +195,6 @@
         <artifactId>hutool-all</artifactId>
         <version>${hutool.version}</version>
       </dependency>
-
-      <!--      &lt;!&ndash; MyBatis 生成器 &ndash;&gt;-->
-      <!--      <dependency>-->
-      <!--        <groupId>org.mybatis.generator</groupId>-->
-      <!--        <artifactId>mybatis-generator-core</artifactId>-->
-      <!--        <version>${mybatis-generator.version}</version>-->
-      <!--      </dependency>-->
-      <!--      &lt;!&ndash; MyBatis&ndash;&gt;-->
-      <!--      <dependency>-->
-      <!--        <groupId>org.mybatis</groupId>-->
-      <!--        <artifactId>mybatis</artifactId>-->
-      <!--        <version>${mybatis.version}</version>-->
-      <!--      </dependency>-->
-
-      <!--      <dependency>-->
-      <!--        <groupId>com.baomidou</groupId>-->
-      <!--        <artifactId>mybatis-plus</artifactId>-->
-      <!--        <version>${mybatis-plus.version}</version>-->
-      <!--      </dependency>-->
 
       <dependency>
         <groupId>com.baomidou</groupId>

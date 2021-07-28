@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class UserDetailDto {
   private String userName;
-  private Integer id;
+  private Long id;
   private List<String> authorities;
 }

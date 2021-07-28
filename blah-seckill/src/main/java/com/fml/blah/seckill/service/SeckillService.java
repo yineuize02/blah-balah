@@ -10,6 +10,7 @@ import com.fml.blah.seckill.rabbit.SeckillSender;
 import com.fml.blah.seckill.rabbit.message.SeckillMessage;
 import com.google.common.util.concurrent.RateLimiter;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
@@ -54,14 +55,19 @@ public class SeckillService {
     userLock.unlockAsync();
 
     RScript decrScript = redissonClient.getScript(StringCodec.INSTANCE);
-    String evalResult =
-        decrScript.eval(Mode.READ_WRITE, seckillConfig.getPreDecrLua(), ReturnType.INTEGER);
-    Integer decrResult = 0;
-    try {
-      decrResult = Integer.parseInt(evalResult);
-    } catch (Exception e) {
-      log.info("Integer.parseInt(evalResult) " + e.getMessage());
-    }
+    Long decrResult =
+        decrScript.eval(
+            Mode.READ_WRITE,
+            seckillConfig.getPreDecrLua(),
+            ReturnType.INTEGER,
+            List.of(RedisPrefix.SECKILL_STOCK + seckillGoodsId),
+            List.of(1).toArray());
+    //    Integer decrResult = 0;
+    //    try {
+    //      decrResult = Integer.parseInt(evalResult);
+    //    } catch (Exception e) {
+    //      log.info("Integer.parseInt(evalResult) " + e.getMessage());
+    //    }
 
     if (decrResult <= 0) {
       return false;

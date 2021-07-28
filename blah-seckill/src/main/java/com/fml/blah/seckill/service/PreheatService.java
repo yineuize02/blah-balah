@@ -28,6 +28,8 @@ public class PreheatService {
         Optional.ofNullable(storeRemoteService.list(startTime, endTime))
             .map(WebResponse::getData)
             .orElseThrow();
+
+    log.info("preheatStock list: startTime " + startTime + " endTime " + endTime + list);
     var batch = redissonClient.createBatch();
     var fullStockBatch = redissonClient.createBatch();
     for (var goods : list) {
@@ -40,6 +42,6 @@ public class PreheatService {
 
     var result = batch.execute();
     fullStockBatch.execute();
-    return result.toString();
+    return result.getResponses().toString();
   }
 }

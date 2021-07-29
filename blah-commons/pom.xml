@@ -19,6 +19,7 @@
     <module>blah-common-rabbit</module>
     <module>blah-common-configs</module>
     <module>blah-common-zookeeper</module>
+    <module>blah-common-auth</module>
 
   </modules>
 

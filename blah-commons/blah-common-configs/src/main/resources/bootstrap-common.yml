@@ -19,8 +19,13 @@ spring:
       sampler:
         probability: 0.1 #设置Sleuth的抽样收集概率
 
+
 logstash:
   host: ${LOGSTASH_ADDR:192.168.230.128}
   logging:
     level:
       root: info
+
+feign:
+  hystrix:
+    enabled: true

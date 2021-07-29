@@ -1,15 +1,17 @@
 package com.fml.blah.seckill.config;
 
 import cn.hutool.core.io.resource.ResourceUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
-public class LuaApplicationRunner implements ApplicationRunner {
+public class SeckillApplicationRunner implements ApplicationRunner {
 
-  @Autowired private LuaConfig luaConfig;
+  @Autowired private SeckillConfig seckillConfig;
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
@@ -19,6 +21,6 @@ public class LuaApplicationRunner implements ApplicationRunner {
     // String result = IOUtils.toString(inputStream, String.valueOf(StandardCharsets.UTF_8));
 
     String lua = ResourceUtil.readUtf8Str("predecr.lua");
-    luaConfig.setPreDecrLua(lua);
+    seckillConfig.setPreDecrLua(lua);
   }
 }

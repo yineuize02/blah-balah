@@ -4,12 +4,13 @@ import cn.hutool.core.util.NumberUtil;
 import com.fml.blah.common.configs.ratelimiter.RateLimiterConfig;
 import com.fml.blah.common.exception.ServerErrorException;
 import com.fml.blah.common.redis.RedisUtils;
-import com.fml.blah.seckill.config.LuaConfig;
+import com.fml.blah.seckill.config.SeckillConfig;
 import com.fml.blah.seckill.constants.RedisPrefix;
 import com.fml.blah.seckill.rabbit.SeckillSender;
 import com.fml.blah.seckill.rabbit.message.SeckillMessage;
 import com.google.common.util.concurrent.RateLimiter;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +35,12 @@ public class SeckillService {
   @Autowired private RedisUtils redisUtils;
   @Autowired private RedissonClient redissonClient;
   @Autowired private SeckillSender seckillSender;
-  @Autowired private LuaConfig luaConfig;
+  @Autowired private SeckillConfig seckillConfig;
 
   public boolean doSeckill(Long seckillGoodsId, Long userId) {
+
+    int buyCount = 1;
+
     var acquireRateLimit = tryAcquireRateLimit(seckillGoodsId);
     if (!acquireRateLimit) {
       return false;
@@ -54,14 +58,13 @@ public class SeckillService {
     userLock.unlockAsync();
 
     RScript decrScript = redissonClient.getScript(StringCodec.INSTANCE);
-    String evalResult =
-        decrScript.eval(Mode.READ_WRITE, luaConfig.getPreDecrLua(), ReturnType.INTEGER);
-    Integer decrResult = 0;
-    try {
-      decrResult = Integer.parseInt(evalResult);
-    } catch (Exception e) {
-      log.info("Integer.parseInt(evalResult) " + e.getMessage());
-    }
+    Long decrResult =
+        decrScript.eval(
+            Mode.READ_WRITE,
+            seckillConfig.getPreDecrLua(),
+            ReturnType.INTEGER,
+            List.of(RedisPrefix.SECKILL_STOCK + seckillGoodsId),
+            List.of(buyCount).toArray());
 
     if (decrResult <= 0) {
       return false;
@@ -74,6 +77,7 @@ public class SeckillService {
             .createTime(LocalDateTime.now())
             .userId(userId)
             .seckillGoodsId(seckillGoodsId)
+            .count(buyCount)
             .build();
     seckillSender.send(msg);
 

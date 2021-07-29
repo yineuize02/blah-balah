@@ -11,7 +11,12 @@ spring:
     port: 5672
     username: guest
     password: guest
-    #确认消息已发送到交换机(Exchange)
-    publisher-confirm-type: correlated
-    #确认消息已发送到队列(Queue)
-    publisher-returns: true
+    listener:
+      type: simple
+      simple:
+        #该配置项是决定由于监听器抛出异常而拒绝的消息是否被重新放回队列。默认值为true。
+        #我一开始对于这个属性有个误解，我以为rejected是表示拒绝，
+        #所以将requeue-rejected连起来是拒绝重新放回队列，后来查了资料明白这个属性的功能才想起来rejected是个形容词，
+        #其表示的应该是被拒绝的消息
+        #所以如果该属性配置为true表示会重新放回队列，如果配置为false表示不会放回队列。
+        default-requeue-rejected: false

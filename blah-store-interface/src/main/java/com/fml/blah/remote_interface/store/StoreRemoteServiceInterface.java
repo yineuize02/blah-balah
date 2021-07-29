@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "blah-store", fallback = StoreRemoteServiceFallBack.class)
 public interface StoreRemoteServiceInterface {
 
-  @GetMapping("list")
+  @GetMapping("seckill/list")
   WebResponse<List<SeckillGoodsDto>> list(
       @RequestParam LocalDateTime startTime, @RequestParam LocalDateTime endTime);
 }

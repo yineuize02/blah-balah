@@ -3,7 +3,7 @@ package com.fml.blah.seckill.config;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LuaConfig {
+public class SeckillConfig {
 
   private String preDecrLua;
 

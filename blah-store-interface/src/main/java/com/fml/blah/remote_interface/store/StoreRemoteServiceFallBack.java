@@ -5,7 +5,9 @@ import com.fml.blah.remote_interface.store.dto.SeckillGoodsDto;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
+@Component
 @Slf4j
 public class StoreRemoteServiceFallBack implements StoreRemoteServiceInterface {
 

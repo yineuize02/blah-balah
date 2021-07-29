@@ -11,6 +11,6 @@ public class SeckillSender {
   @Autowired private AmqpTemplate rabbitTemplate;
 
   public void send(SeckillMessage seckillMessage) {
-    this.rabbitTemplate.convertAndSend(RoutingKeys.SECKILL, seckillMessage);
+    this.rabbitTemplate.convertAndSend(QueueConstants.SECKILL_ROUTE_KEY, seckillMessage);
   }
 }

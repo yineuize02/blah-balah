@@ -6,12 +6,14 @@ import com.fml.blah.store.entity.SeckillGoods;
 import com.fml.blah.store.service.ISeckillGoodsMbpService;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/seckill")
 public class SeckillGoodsController {
@@ -33,7 +35,7 @@ public class SeckillGoodsController {
   @GetMapping("list")
   public WebResponse<List<SeckillGoods>> list(
       @RequestParam LocalDateTime startTime, @RequestParam LocalDateTime endTime) {
-
+    log.info("list " + startTime + " " + endTime);
     var query = Wrappers.<SeckillGoods>lambdaQuery();
     if (startTime != null) {
       query.ge(SeckillGoods::getStartTime, startTime);

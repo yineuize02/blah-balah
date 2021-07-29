@@ -20,6 +20,7 @@
     <dependency>
       <groupId>com.fml</groupId>
       <artifactId>blah-test</artifactId>
+      <scope>test</scope>
       <exclusions>
         <exclusion>
           <groupId>org.springframework.boot</groupId>

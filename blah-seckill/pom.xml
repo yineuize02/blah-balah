@@ -15,6 +15,7 @@
     <dependency>
       <groupId>com.fml</groupId>
       <artifactId>blah-test</artifactId>
+      <scope>test</scope>
       <exclusions>
         <exclusion>
           <groupId>org.springframework.boot</groupId>
@@ -26,6 +27,11 @@
     <dependency>
       <groupId>com.fml</groupId>
       <artifactId>blah-common-configs</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-common-auth</artifactId>
     </dependency>
 
     <dependency>
@@ -43,6 +49,7 @@
       <artifactId>blah-common-redis</artifactId>
     </dependency>
 
+
     <dependency>
       <groupId>com.fml</groupId>
       <artifactId>blah-common-rabbit</artifactId>
@@ -51,6 +58,13 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>nimbus-jose-jwt</artifactId>
+      <scope>compile</scope>
+      <version>8.21</version>
     </dependency>
   </dependencies>
 

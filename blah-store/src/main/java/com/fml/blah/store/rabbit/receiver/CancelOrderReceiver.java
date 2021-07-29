@@ -17,6 +17,6 @@ public class CancelOrderReceiver {
   @RabbitHandler
   public void process(Integer id, Channel channel, Message message) throws IOException {
     log.info("CancelOrderReceiver消费者收到消息  : " + id);
-    //  throw new RuntimeException("haha");
+    // throw new RuntimeException("haha");
   }
 }

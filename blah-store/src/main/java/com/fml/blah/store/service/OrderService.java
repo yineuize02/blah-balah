@@ -1,5 +1,7 @@
 package com.fml.blah.store.service;
 
+import static com.fml.blah.store.rabbit.QueueConstants.ORDER_DELAY_CANCEL_TIME;
+
 import cn.hutool.core.bean.BeanUtil;
 import com.fml.blah.store.entity.ShopOrder;
 import com.fml.blah.store.mapper.ShopOrderMapper;
@@ -47,7 +49,7 @@ public class OrderService {
               payload.getGoodsId(), payload.getUserId()));
     }
 
-    cancelOrderSender.sendCancelOrderDelay(order.getId(), 1000 * 60 * 2L);
+    cancelOrderSender.sendCancelOrderDelay(order.getId(), ORDER_DELAY_CANCEL_TIME);
   }
 
   @Transactional

@@ -15,9 +15,7 @@ public class CancelOrderReceiver {
 
   @RabbitListener(queues = QueueConstants.ORDER_DELAY_CANCEL_QUEUE) // 监听的队列名称 TestDirectQueue
   @RabbitHandler
-  public void process(SeckillMessage seckillMessage, Channel channel, Message message)
-      throws IOException {
-    log.info("DirectReceiver消费者收到消息  : " + seckillMessage.toString());
-    //  channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+  public void process(Integer id, Channel channel, Message message) throws IOException {
+    log.info("CancelOrderReceiver消费者收到消息  : " + id);
   }
 }

@@ -14,4 +14,5 @@ public class SeckillMessage {
   private Long userId;
   private Long seckillGoodsId;
   private LocalDateTime createTime;
+  private Integer count;
 }

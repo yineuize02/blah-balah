@@ -38,6 +38,9 @@ public class SeckillService {
   @Autowired private SeckillConfig seckillConfig;
 
   public boolean doSeckill(Long seckillGoodsId, Long userId) {
+
+    int buyCount = 1;
+
     var acquireRateLimit = tryAcquireRateLimit(seckillGoodsId);
     if (!acquireRateLimit) {
       return false;
@@ -61,7 +64,7 @@ public class SeckillService {
             seckillConfig.getPreDecrLua(),
             ReturnType.INTEGER,
             List.of(RedisPrefix.SECKILL_STOCK + seckillGoodsId),
-            List.of(1).toArray());
+            List.of(buyCount).toArray());
     //    Integer decrResult = 0;
     //    try {
     //      decrResult = Integer.parseInt(evalResult);
@@ -80,6 +83,7 @@ public class SeckillService {
             .createTime(LocalDateTime.now())
             .userId(userId)
             .seckillGoodsId(seckillGoodsId)
+            .count(buyCount)
             .build();
     seckillSender.send(msg);
 

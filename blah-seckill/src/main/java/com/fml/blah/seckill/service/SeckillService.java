@@ -65,12 +65,6 @@ public class SeckillService {
             ReturnType.INTEGER,
             List.of(RedisPrefix.SECKILL_STOCK + seckillGoodsId),
             List.of(buyCount).toArray());
-    //    Integer decrResult = 0;
-    //    try {
-    //      decrResult = Integer.parseInt(evalResult);
-    //    } catch (Exception e) {
-    //      log.info("Integer.parseInt(evalResult) " + e.getMessage());
-    //    }
 
     if (decrResult <= 0) {
       return false;

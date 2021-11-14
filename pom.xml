@@ -29,6 +29,8 @@
     <module>blah-store</module>
     <module>blah-store-interface</module>
     <module>blah-oauth-interface</module>
+    <module>blah-activiti-demo</module>
+    <module>blah-common-orm</module>
   </modules>
 
 
@@ -112,6 +114,12 @@
       <dependency>
         <groupId>com.fml</groupId>
         <artifactId>blah-common-auth</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fml</groupId>
+        <artifactId>blah-common-orm</artifactId>
         <version>${project.version}</version>
       </dependency>
 

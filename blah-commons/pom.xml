@@ -20,6 +20,7 @@
     <module>blah-common-configs</module>
     <module>blah-common-zookeeper</module>
     <module>blah-common-auth</module>
+    <module>blah-common-orm</module>
 
   </modules>
 

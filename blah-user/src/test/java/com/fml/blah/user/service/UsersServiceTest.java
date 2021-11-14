@@ -21,12 +21,14 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import mybatis.BlahLambdaQueryWrapper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.redisson.api.RBucket;
@@ -324,5 +326,47 @@ public class UsersServiceTest extends ServiceTestBase {
         passwordEncoder.matches(
             "123456", "$2a$10$HD32EvfZKKnBXcFbRX30e.Ju.GuBYASKq/oLPuHtWHXxrOz4ah4mi");
     Assert.assertTrue(match);
+  }
+
+  @Test
+  public void testVoidSafeIn() {
+    jdbcTemplate.execute("truncate table blah_user.users;");
+    int max = 30;
+    List<Users> usersList = new ArrayList<>(max);
+
+    for (int i = 0; i < max; i++) {
+      var time = System.currentTimeMillis();
+      var user = new Users();
+      user.setId(Integer.toUnsignedLong(i + 1));
+      user.setUserName("foo" + i + time);
+      user.setPassword("bar" + time);
+      user.setCreatedAt(LocalDateTime.now());
+      user.setUpdatedAt(LocalDateTime.now());
+      usersList.add(user);
+    }
+
+    // usersMapper.batchInsertOrUpdate(usersList);
+    Integer sum =
+        BatchExecHelper.batchExec(usersList, usersExtendMapper::batchInsertOrUpdate, Users.class);
+    System.out.println("sum: " + sum);
+
+    QueryWrapper<Users> wrapper = new QueryWrapper<>();
+    var count = usersMapper.selectCount(wrapper);
+    Assert.assertEquals(Integer.valueOf(max), count);
+    Assert.assertEquals(Integer.valueOf(max), sum);
+
+    var liw =
+        new BlahLambdaQueryWrapper<Users>()
+            .emptySafeIn(true, Users::getId, List.of())
+            .eq(Users::getUserName, usersList.get(0).getUserName())
+            .emptySafeIn(true, Users::getId, null);
+    var li = usersMapper.selectList(liw);
+    Assert.assertEquals(0, li.size());
+
+    var userNames = usersList.stream().map(Users::getUserName).collect(Collectors.toList());
+    var liw1 = new BlahLambdaQueryWrapper<Users>().emptySafeIn(true, Users::getUserName, userNames);
+    var li1 = usersMapper.selectList(liw1);
+
+    Assert.assertEquals(userNames.size(), li1.size());
   }
 }

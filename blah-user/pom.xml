@@ -37,10 +37,15 @@
       <groupId>com.fml</groupId>
       <artifactId>blah-user-interface</artifactId>
     </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.baomidou</groupId>-->
+<!--      <artifactId>mybatis-plus-boot-starter</artifactId>-->
+<!--    </dependency>-->
     <dependency>
-      <groupId>com.baomidou</groupId>
-      <artifactId>mybatis-plus-boot-starter</artifactId>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-common-orm</artifactId>
     </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>

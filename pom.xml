@@ -30,7 +30,6 @@
     <module>blah-store-interface</module>
     <module>blah-oauth-interface</module>
     <module>blah-activiti-demo</module>
-    <module>blah-common-orm</module>
   </modules>
 
 

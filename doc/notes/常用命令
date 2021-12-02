@@ -33,3 +33,11 @@ sed -i -e 's/\r$//' scriptname.sh
 zookeeper cli:
 docker exec -it zookeeper /bin/bash
 bin/zkCli.sh
+
+------------------------
+mvn 编译指定module，以及依赖他的 跳过测试
+mvn compile -pl blah-user -Pproduct -am -Dmaven.test.skip=true
+
+如果3和4依赖于1 那么编译1过后同时会把3和4编译出来
+mvn package -pl module_1 -Pproduct -amd
+

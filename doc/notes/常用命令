@@ -41,3 +41,6 @@ mvn compile -pl blah-user -Pproduct -am -Dmaven.test.skip=true
 如果3和4依赖于1 那么编译1过后同时会把3和4编译出来
 mvn package -pl module_1 -Pproduct -amd
 
+mvn dependency:tree>temp/tree.txt
+mvn dependency:tree
+

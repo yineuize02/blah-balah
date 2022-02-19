@@ -16,6 +16,12 @@ public class UserRemoteServiceFallBack implements UserRemoteServiceInterface {
   }
 
   @Override
+  public WebResponse<Boolean> checkPassword(String userName, String password) {
+    log.error("checkPassword fallback userName: " + userName);
+    return WebResponse.fallback(false);
+  }
+
+  @Override
   public WebResponse<UserRolesDto> createUser(UserAddParam param) {
     log.error("createUser fallback param: " + param.getUserName());
     return WebResponse.fallback(null);

@@ -29,7 +29,7 @@
     <module>blah-store</module>
     <module>blah-store-interface</module>
     <module>blah-oauth-interface</module>
-    <module>blah-activiti-demo</module>
+    <module>blah-auth</module>
   </modules>
 
 

@@ -12,6 +12,8 @@ public interface UsersService {
 
   Users addUser(UserAddParam param);
 
+  Boolean checkPassword(String userName, String password);
+
   UserRolesDto getUserInfoByName(String userName);
 
   @NoArgsConstructor

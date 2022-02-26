@@ -12,6 +12,7 @@ import com.fml.blah.remote_interface.user.dto.UserRolesDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/auth/user")
 public class AuthController {
 
   @Autowired private UserRemoteServiceInterface userRemoteService;
@@ -45,15 +46,14 @@ public class AuthController {
     return new WebResponse<>("logout success", true);
   }
 
+  @GetMapping("/authentication")
   public WebResponse<UserRolesDto> authentication(@RequestParam String token) {
     String username = (String) redisUtils.get(AUTH_TOKEN + token);
     if (username == null) {
       return new WebResponse<>("auth fail", null);
     }
 
-    userRemoteService.getUserByName(username);
-    // return new WebResponse<>("auth success", userRemoteService.getUserRoles(username));
-    // todo
-    return null;
+    WebResponse<UserRolesDto> user = userRemoteService.getUserByName(username);
+    return new WebResponse<>("auth success", user.getData());
   }
 }

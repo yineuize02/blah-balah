@@ -1,10 +1,10 @@
 package com.fml.blah.auth.controller;
 
-import static com.fml.blah.auth.constants.constants.RedisConstants.AUTH_TOKEN;
+import static com.fml.blah.auth.constants.RedisConstants.AUTH_TOKEN;
 
 import cn.hutool.core.util.IdUtil;
-import com.fml.blah.auth.constants.constants.RedisConstants;
-import com.fml.blah.auth.constants.dto.LoginPayload;
+import com.fml.blah.auth.constants.RedisConstants;
+import com.fml.blah.auth.dto.LoginPayload;
 import com.fml.blah.common.redis.RedisUtils;
 import com.fml.blah.common.vo.WebResponse;
 import com.fml.blah.remote_interface.user.UserRemoteServiceInterface;

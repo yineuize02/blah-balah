@@ -1,4 +1,4 @@
-package com.fml.blah.auth.constants.constants;
+package com.fml.blah.auth.constants;
 
 public interface RedisConstants {
 

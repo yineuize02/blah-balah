@@ -1,4 +1,4 @@
-package com.fml.blah.auth.constants.dto;
+package com.fml.blah.auth.dto;
 
 import javax.validation.constraints.NotBlank;
 import lombok.Data;

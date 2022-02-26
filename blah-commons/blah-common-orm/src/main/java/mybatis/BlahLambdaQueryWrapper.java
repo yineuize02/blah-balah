@@ -100,13 +100,24 @@ public class BlahLambdaQueryWrapper<T> extends AbstractLambdaWrapper<T, BlahLamb
   }
 
   @Override
+  public String getSqlSelect() {
+    return this.sqlSelect.getStringValue();
+  }
+
+  @Override
   public BlahLambdaQueryWrapper<T> emptySafeIn(
       boolean condition, SFunction<T, ?> column, Collection<?> coll) {
 
     if (coll != null && coll.size() > 0) {
-      return super.in(condition, column, coll);
+      return in(condition, column, coll);
     }
 
     return apply("1!=1");
+  }
+
+  @Override
+  public void clear() {
+    super.clear();
+    this.sqlSelect.toNull();
   }
 }

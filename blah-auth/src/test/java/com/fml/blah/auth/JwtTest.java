@@ -7,9 +7,12 @@ import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSSigner;
+import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.RSASSASigner;
+import com.nimbusds.jose.crypto.RSASSAVerifier;
 import java.security.KeyPair;
+import java.security.interfaces.RSAPublicKey;
 import lombok.SneakyThrows;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,10 @@ public class JwtTest extends ServiceTestBase {
     String token = jwsObject.serialize();
     System.out.println(token);
 
-    ///  JWSVerifier jwsVerifier = new RSASSAVerifier(keyPair.getPublic());
+    JWSVerifier jwsVerifier = new RSASSAVerifier((RSAPublicKey) keyPair.getPublic());
+    var jwsO1 = JWSObject.parse(token);
+    var result = jwsO1.verify(jwsVerifier);
+    System.out.println(result);
+    System.out.println(jwsO1.getPayload().toString());
   }
 }

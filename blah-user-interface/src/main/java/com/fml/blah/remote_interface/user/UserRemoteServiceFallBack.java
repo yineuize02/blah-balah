@@ -4,6 +4,7 @@ import com.fml.blah.common.vo.WebResponse;
 import com.fml.blah.remote_interface.user.dto.UserRolesDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Component
 @Slf4j
@@ -15,6 +16,7 @@ public class UserRemoteServiceFallBack implements UserRemoteServiceInterface {
     return WebResponse.fallback(null);
   }
 
+  @GetMapping("/users/check_password")
   @Override
   public WebResponse<Boolean> checkPassword(String userName, String password) {
     log.error("checkPassword fallback userName: " + userName);

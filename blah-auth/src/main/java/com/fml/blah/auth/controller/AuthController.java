@@ -32,28 +32,28 @@ public class AuthController {
     WebResponse<Boolean> checkPassword =
         userRemoteService.checkPassword(payload.getUsername(), payload.getPassword());
     if (!checkPassword.getData()) {
-      return new WebResponse<>("登录失败", null);
+      return WebResponse.error("用户名或密码错误");
     }
 
     String token = IdUtil.simpleUUID() + IdUtil.simpleUUID();
     redisUtils.set(AUTH_TOKEN + token, payload.getUsername(), RedisConstants.AUTH_TOKEN_EXPIRY);
-    return new WebResponse<>("login success", token);
+    return WebResponse.ok(token);
   }
 
   @DeleteMapping("/logout")
   public WebResponse<Boolean> logout(@RequestParam String token) {
     redisUtils.del(AUTH_TOKEN + token);
-    return new WebResponse<>("logout success", true);
+    return WebResponse.ok(true);
   }
 
   @GetMapping("/authentication")
   public WebResponse<UserRolesDto> authentication(@RequestParam String token) {
     String username = (String) redisUtils.get(AUTH_TOKEN + token);
     if (username == null) {
-      return new WebResponse<>("auth fail", null);
+      return WebResponse.error(null);
     }
 
     WebResponse<UserRolesDto> user = userRemoteService.getUserByName(username);
-    return new WebResponse<>("auth success", user.getData());
+    return WebResponse.ok(user.getData());
   }
 }

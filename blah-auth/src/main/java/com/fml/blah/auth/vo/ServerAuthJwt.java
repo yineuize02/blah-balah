@@ -5,5 +5,5 @@ import lombok.Data;
 /** @author yrz */
 @Data
 public class ServerAuthJwt {
-  private String refresh;
+  private String id;
 }

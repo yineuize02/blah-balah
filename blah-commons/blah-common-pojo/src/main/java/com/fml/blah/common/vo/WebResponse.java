@@ -7,12 +7,18 @@ import lombok.Data;
 @Data
 public class WebResponse<T> implements Serializable {
 
-  private String message;
+  private String status;
   private T data;
 
-  public WebResponse(String message, T data) {
-    this.message = message;
+  public WebResponse(String status, T data) {
+    this.status = status;
     this.data = data;
+  }
+
+  public WebResponse() {}
+
+  public boolean isSuccess() {
+    return ResponseMessageConstants.OK.equals(status);
   }
 
   public static <T> WebResponse<T> ok(T data) {

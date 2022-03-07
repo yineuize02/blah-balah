@@ -29,8 +29,7 @@
     <module>blah-store</module>
     <module>blah-store-interface</module>
     <module>blah-oauth-interface</module>
-    <module>blah-activiti-demo</module>
-    <module>blah-common-orm</module>
+    <module>blah-auth</module>
   </modules>
 
 
@@ -54,6 +53,7 @@
     <spring-boot-starter-jdbc.version>2.3.0.RELEASE</spring-boot-starter-jdbc.version>
     <docker.maven.plugin.version>1.2.2</docker.maven.plugin.version>
     <mybatis-plus.version>3.4.2</mybatis-plus.version>
+    <log4j2.version>2.15.0</log4j2.version>
   </properties>
 
   <dependencies>

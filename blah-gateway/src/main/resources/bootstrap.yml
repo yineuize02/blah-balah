@@ -5,6 +5,7 @@ spring:
     name: blah-gateway
   profiles:
     active: dev,common
+    
 
 
 

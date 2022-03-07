@@ -1,0 +1,7 @@
+server:
+  port: 8890
+spring:
+  application:
+    name: blah-auth
+  profiles:
+    active: dev,common

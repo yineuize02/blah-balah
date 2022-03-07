@@ -26,6 +26,8 @@ public class UsersServiceImpl implements UsersService {
   @Autowired private UsersRolesMapper usersRolesMapper;
   @Autowired private PasswordEncoder passwordEncoder;
 
+  @Autowired private UsersService usersService;
+
   @Transactional
   @Override
   public Users addUser(UserAddParam param) {
@@ -40,8 +42,19 @@ public class UsersServiceImpl implements UsersService {
     return user;
   }
 
+  @Cacheable("user:checkPassword#200#100")
+  @Override
+  public Boolean checkPassword(String userName, String password) {
+    var user =
+        usersMbpService.getOne(Wrappers.<Users>lambdaQuery().eq(Users::getUserName, userName));
+    if (user == null) {
+      return false;
+    }
+    return passwordEncoder.matches(password, user.getPassword());
+  }
+
   // 过期时间3600秒加随机0到100秒
-  @Cacheable("userinfo#3600#100")
+  @Cacheable("user:userinfo#3600#100")
   @Override
   public UserRolesDto getUserInfoByName(String userName) {
     var user =

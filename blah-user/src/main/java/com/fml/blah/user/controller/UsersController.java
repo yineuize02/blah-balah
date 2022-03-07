@@ -34,19 +34,24 @@ public class UsersController {
   @Autowired private UsersService usersService;
 
   @GetMapping("/hello")
-  public WebResponse<String> helloWorld() {
-    return WebResponse.ok("hello world");
-  }
-
-  @GetMapping("get_by_user_name")
-  public WebResponse<UserRolesDto> getUserByName(
-      @RequestParam @NotNull String userName, @RequestHeader Map<String, String> headers) {
-
+  public WebResponse<String> helloWorld(@RequestHeader Map<String, String> headers) {
     String header = getHeaders(headers);
     log.warn(header);
 
+    return WebResponse.ok("hello world");
+  }
+
+  @GetMapping("by_user_name")
+  public WebResponse<UserRolesDto> getUserByName(@RequestParam @NotNull String userName) {
+
     var userDto = usersService.getUserInfoByName(userName);
     return WebResponse.ok(userDto);
+  }
+
+  @GetMapping("check_password")
+  public WebResponse<Boolean> checkPassword(
+      @RequestParam @NotNull String userName, @RequestParam @NotNull String password) {
+    return WebResponse.ok(usersService.checkPassword(userName, password));
   }
 
   @PostMapping("create_user")

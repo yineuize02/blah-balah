@@ -1,2 +1,5 @@
 share:
   config1: 这里是共享配置文件1
+
+blah:
+  server-secret: 123456

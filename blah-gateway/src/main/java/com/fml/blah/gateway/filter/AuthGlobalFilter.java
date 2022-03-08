@@ -1,6 +1,7 @@
 package com.fml.blah.gateway.filter;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.fml.blah.common.vo.WebResponse;
 import com.fml.blah.gateway.config.WhiteListConfig;
 import com.fml.blah.gateway.utils.WebUtils;
@@ -14,6 +15,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
@@ -52,6 +54,8 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
           exchange.getResponse(), WebResponse.unauthorized("token is empty"));
     }
 
+    Mono<String> mono2 = Mono.just(token);
+
     Mono mono =
         webBuilder
             .baseUrl("lb://blah-auth/")
@@ -63,14 +67,21 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             .header(HttpHeaders.AUTHORIZATION, token)
             .retrieve()
             .bodyToMono(WebResponse.class)
+            .zipWith(mono2)
             .flatMap(
-                response -> {
+                tuple -> {
+                  var response = tuple.getT1();
                   if (!response.isSuccess()) {
                     return WebUtils.ofMonoResponse(
                         exchange.getResponse(), WebResponse.unauthorized("token is invalid"));
                   }
 
-                  return chain.filter(exchange);
+                  var data = response.getData();
+                  String json = JSONUtil.toJsonStr(data);
+                  ServerHttpRequest httpRequest =
+                      exchange.getRequest().mutate().header("user", json).build();
+
+                  return chain.filter(exchange.mutate().request(httpRequest).build());
                 });
 
     //    try {

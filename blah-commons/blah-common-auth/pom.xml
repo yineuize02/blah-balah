@@ -11,10 +11,10 @@
 
   <artifactId>blah-common-auth</artifactId>
   <dependencies>
-    <dependency>
-      <groupId>com.fml</groupId>
-      <artifactId>blah-oauth-interface</artifactId>
-    </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>com.fml</groupId>-->
+    <!--      <artifactId>blah-oauth-interface</artifactId>-->
+    <!--    </dependency>-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
@@ -25,6 +25,10 @@
       <artifactId>nimbus-jose-jwt</artifactId>
       <scope>compile</scope>
       <version>8.21</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fml</groupId>
+      <artifactId>blah-common-pojo</artifactId>
     </dependency>
   </dependencies>
 

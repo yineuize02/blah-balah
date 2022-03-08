@@ -30,6 +30,7 @@
     <module>blah-store-interface</module>
     <module>blah-oauth-interface</module>
     <module>blah-auth</module>
+    <module>blah-auth-interface</module>
   </modules>
 
 

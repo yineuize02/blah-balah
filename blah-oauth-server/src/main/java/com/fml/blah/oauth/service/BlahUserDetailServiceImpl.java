@@ -28,7 +28,7 @@ public class BlahUserDetailServiceImpl implements UserDetailsService {
 
     var response = userRemoteService.getUserByName(username);
     log.warn(response.toString());
-    if (ResponseMessageConstants.FALLBACK.equals(response.getMessage())) {
+    if (ResponseMessageConstants.FALLBACK.equals(response.getStatus())) {
       throw new UsernameNotFoundException("FALLBACK");
     }
 

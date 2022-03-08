@@ -5,10 +5,15 @@ import static com.fml.blah.auth.constants.RedisConstants.AUTH_TOKEN;
 import cn.hutool.core.util.IdUtil;
 import com.fml.blah.auth.constants.RedisConstants;
 import com.fml.blah.auth.dto.LoginPayload;
+import com.fml.blah.common.dto.UserDetailDto;
 import com.fml.blah.common.redis.RedisUtils;
 import com.fml.blah.common.vo.WebResponse;
 import com.fml.blah.remote_interface.user.UserRemoteServiceInterface;
+import com.fml.blah.remote_interface.user.dto.RoleDto;
 import com.fml.blah.remote_interface.user.dto.UserRolesDto;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,13 +52,28 @@ public class AuthController {
   }
 
   @GetMapping("/authentication")
-  public WebResponse<UserRolesDto> authentication(@RequestParam String token) {
+  public WebResponse<UserDetailDto> authentication(@RequestParam String token) {
     String username = (String) redisUtils.get(AUTH_TOKEN + token);
     if (username == null) {
       return WebResponse.error(null);
     }
 
-    WebResponse<UserRolesDto> user = userRemoteService.getUserByName(username);
-    return WebResponse.ok(user.getData());
+    WebResponse<UserRolesDto> userRes = userRemoteService.getUserByName(username);
+    var user = userRes.getData();
+    if (user == null) {
+      return WebResponse.error(null);
+    }
+
+    var userRoles =
+        Optional.ofNullable(user.getRoles())
+            .map(l -> l.stream().map(RoleDto::getName).collect(Collectors.toList()))
+            .orElse(List.of());
+    // todo user authorities
+
+    var userDetail = new UserDetailDto();
+    userDetail.setUserName(user.getUserName());
+    userDetail.setRoles(userRoles);
+    userDetail.setId(user.getId());
+    return WebResponse.ok(userDetail);
   }
 }

@@ -3,11 +3,7 @@ server:
 spring:
   application:
     name: blah-gateway
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: 'http://localhost:8801/blah-oauth/oauth/rsa/getPublicKey'  #RSA公钥
+
   redis:
     database: 0
     port: 6379
@@ -38,9 +34,16 @@ spring:
             - Path=/blah-seckill/**
           filters:
             - StripPrefix=1
+        - id: blah-auth
+          uri: lb://blah-auth
+          predicates:
+            - Path=/blah-auth/**
+          filters:
+            - StripPrefix=1
 blah:
   whitelist:
     urls:
       - "/**/*.ico"
       - "/blah-oauth/oauth/token"
       - "/blah-oauth/oauth/rsa/getPublicKey"
+      - "/blah-auth/auth/user/login"

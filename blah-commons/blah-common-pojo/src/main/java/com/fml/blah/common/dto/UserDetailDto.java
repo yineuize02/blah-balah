@@ -8,5 +8,5 @@ public class UserDetailDto {
   private String userName;
   private Long id;
   private List<String> roles;
-  private List<String> authorities;
+  // private List<String> authorities;
 }

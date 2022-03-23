@@ -12,7 +12,7 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import reactor.core.publisher.Mono;
 
 public class WebUtils {
-  public static Mono ofMonoResponse(ServerHttpResponse response, WebResponse webResponse) {
+  public static Mono<Void> ofMonoResponse(ServerHttpResponse response, WebResponse webResponse) {
     response.setStatusCode(HttpStatus.OK);
     response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
     response.getHeaders().set("Access-Control-Allow-Origin", "*");

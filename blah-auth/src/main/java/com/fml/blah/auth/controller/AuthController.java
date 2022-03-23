@@ -55,13 +55,13 @@ public class AuthController {
   public WebResponse<UserDetailDto> authentication(@RequestParam String token) {
     String username = (String) redisUtils.get(AUTH_TOKEN + token);
     if (username == null) {
-      return WebResponse.error(null);
+      return WebResponse.unauthorized("username == null", null);
     }
 
     WebResponse<UserRolesDto> userRes = userRemoteService.getUserByName(username);
     var user = userRes.getData();
     if (user == null) {
-      return WebResponse.error(null);
+      return WebResponse.unauthorized("user == null", null);
     }
 
     var userRoles =
